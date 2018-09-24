@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RighTide</string>
+    <string name="navigation_favorites">Favorites</string>
+    <string name="navigation_county">County</string>
+    <string name="navigation_explore">Explore</string>
+    <string name="navigation_settings">Settings</string>
+</resources>

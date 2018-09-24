@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_favorites"
+        android:icon="@drawable/star"
+        android:title="@string/navigation_favorites" />
+
+    <item
+        android:id="@+id/navigation_county"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/navigation_county" />
+
+    <item
+        android:id="@+id/navigation_explore"
+        android:icon="@drawable/map_marker_circle"
+        android:title="@string/navigation_explore" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/settings"
+        android:title="@string/navigation_settings" />
+
+</menu>
