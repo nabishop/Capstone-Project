@@ -4,29 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UI.MainActivity">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/master_activity_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:id="@+id/favorites_activity_favorites_fragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".5" />
-
-        <FrameLayout
-            android:id="@+id/favorites_activity_beach_list"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".5" />
-
-    </LinearLayout>
-
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

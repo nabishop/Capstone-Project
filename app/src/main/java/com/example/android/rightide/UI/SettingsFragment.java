@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 
 import com.example.android.rightide.R;
 
-public class FavoitesFragment extends Fragment {
-    public FavoitesFragment() {
+public class SettingsFragment extends Fragment {
+    public SettingsFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.favorites_fragment, container, false);
+        View root = inflater.inflate(R.layout.settings_fragment, container, false);
         return root;
     }
 }
