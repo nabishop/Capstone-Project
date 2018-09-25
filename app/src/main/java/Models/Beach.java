@@ -56,4 +56,23 @@ public class Beach implements Parcelable {
         }
     };
 
+    public ArrayList<WeatherHour> getWeatherForTheDay() {
+        return weatherForTheDay;
+    }
+
+    public String getSpotId() {
+        return spotId;
+    }
+
+    public String getSpotName() {
+        return spotName;
+    }
+
+    public String getWaterTemperatureForTheDayCelcius() {
+        return waterTemperatureForTheDayCelcius;
+    }
+
+    public String getWaterTemperatureForTheDayDegrees() {
+        return waterTemperatureForTheDayDegrees;
+    }
 }
