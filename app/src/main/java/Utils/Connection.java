@@ -8,7 +8,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 public class Connection {
-    protected static String urlMovieRequest(URL url) {
+    protected static String urlRequest(URL url) {
         System.out.println("URL " + url.toString());
         try {
             String jsonResponse = null;

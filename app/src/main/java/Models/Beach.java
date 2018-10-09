@@ -8,16 +8,16 @@ import java.util.ArrayList;
 public class Beach implements Parcelable {
     private String spotId;
     private String spotName;
-    private ArrayList<WeatherHour> weatherForTheDay;
+    private int score;
     private String waterTemperatureForTheDayCelcius;
     private String waterTemperatureForTheDayDegrees;
 
 
-    public Beach(String spotId, String spotName, ArrayList<WeatherHour> weatherForTheDay,
+    public Beach(String spotId, String spotName, int score,
                  String waterTemperatureForTheDayCelcius, String waterTemperatureForTheDayDegrees) {
         this.spotId = spotId;
         this.spotName = spotName;
-        this.weatherForTheDay = weatherForTheDay;
+        this.score = score;
         this.waterTemperatureForTheDayCelcius = waterTemperatureForTheDayCelcius;
         this.waterTemperatureForTheDayDegrees = waterTemperatureForTheDayDegrees;
     }
@@ -25,7 +25,7 @@ public class Beach implements Parcelable {
     public Beach(Parcel in) {
         this.spotId = in.readString();
         this.spotName = in.readString();
-        this.weatherForTheDay = in.readArrayList(WeatherHour.class.getClassLoader());
+        this.score = in.readInt();
         this.waterTemperatureForTheDayCelcius = in.readString();
         this.waterTemperatureForTheDayDegrees = in.readString();
     }
@@ -39,7 +39,7 @@ public class Beach implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(spotId);
         dest.writeString(spotName);
-        dest.writeList(weatherForTheDay);
+        dest.writeInt(score);
         dest.writeString(waterTemperatureForTheDayCelcius);
         dest.writeString(waterTemperatureForTheDayDegrees);
     }
@@ -56,8 +56,8 @@ public class Beach implements Parcelable {
         }
     };
 
-    public ArrayList<WeatherHour> getWeatherForTheDay() {
-        return weatherForTheDay;
+    public int getScore() {
+        return score;
     }
 
     public String getSpotId() {
