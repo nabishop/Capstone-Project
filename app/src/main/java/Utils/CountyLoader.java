@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import Models.Beach;
 import Models.County;
 
 // a bunch of helper strings used for parsing
@@ -39,7 +40,6 @@ public class CountyLoader {
                 if (response != null) {
                     List<County> countyList = parseResponse(response);
 
-                    if ()
                 }
             }
 
@@ -55,8 +55,8 @@ public class CountyLoader {
             for (int x = 0; x < results.length(); x++) {
                 JSONObject county = results.getJSONObject(x);
 
-
             }
+            return null;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,6 +73,10 @@ public class CountyLoader {
             int spot_id = countyObject.getInt(JSONParsing.SPOT_ID);
             String spotName = countyObject.getString(JSONParsing.SPOT_NAME);
 
+            ArrayList<Beach> beachArrayList = new ArrayList<>();
+            beachArrayList = BeachLoader.getBeach(spotName, spot_id);
+            County county = new County(countyName, beachArrayList);
+            return county;
 
         } catch (Exception e) {
             e.printStackTrace();
