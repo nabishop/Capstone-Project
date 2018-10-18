@@ -41,6 +41,14 @@ public class BeachLoader {
         }
     }
 
+    private static double rankScore(String category) {
+
+    }
+
+    private static double calculateAvgScore(String swell, String tide, String wind) {
+
+    }
+
     private static ArrayList<Beach> parseResponse(String response,
                                                   int beachId, String beachName) {
         try {
@@ -61,7 +69,7 @@ public class BeachLoader {
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
                 //TODO Calculate Score Here
-                int score;
+                double score;
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
                 ArrayList<String> warnings = new ArrayList<>();
@@ -77,6 +85,7 @@ public class BeachLoader {
             e.printStackTrace();
             Log.e("parseResponse Failure", "Failure Parsing with response: "
                     + response);
+            return null;
         }
     }
 
