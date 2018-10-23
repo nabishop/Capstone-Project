@@ -45,13 +45,6 @@ public class BeachLoader {
         return null;
     }
 
-    private static double rankScore(String category) {
-
-    }
-
-    private static double calculateAvgScore(String swell, String tide, String wind) {
-
-    }
 
     private static ArrayList<Beach> parseResponse(String response,
                                                   int beachId, String beachName) {
@@ -73,11 +66,7 @@ public class BeachLoader {
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
                 //TODO Calculate Score Here
-<<<<<<< HEAD
                 double score=getScore(swellScore, tideScore, windScore);
-=======
-                double score;
->>>>>>> 8c5cf0f2c7a34b9205b50219a5da5026c4f6c434
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
                 ArrayList<String> warnings = new ArrayList<>();
