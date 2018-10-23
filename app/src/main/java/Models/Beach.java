@@ -6,17 +6,17 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Beach implements Parcelable {
-    private String spotId;
+    private int spotId;
     private String spotName;
     private String date;
     private String day;
     private double waveSizeFt;
-    private int score;
+    private double score;
     private ArrayList<String> warnings;
 
 
-    public Beach(String spotId, String spotName, String date, String day,
-                 double waveSizeFt, int score, ArrayList<String> warnings) {
+    public Beach(int spotId, String spotName, String date, String day,
+                 double waveSizeFt, double score, ArrayList<String> warnings) {
         this.spotId = spotId;
         this.spotName = spotName;
         this.date = date;
@@ -27,12 +27,12 @@ public class Beach implements Parcelable {
     }
 
     public Beach(Parcel in) {
-        this.spotId = in.readString();
+        this.spotId = in.readInt();
         this.spotName = in.readString();
         this.date = in.readString();
         this.day = in.readString();
         this.waveSizeFt = in.readDouble();
-        this.score = in.readInt();
+        this.score = in.readDouble();
         this.warnings = in.readArrayList(String.class.getClassLoader());
     }
 
@@ -43,12 +43,12 @@ public class Beach implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(spotId);
+        dest.writeInt(spotId);
         dest.writeString(spotName);
         dest.writeString(date);
         dest.writeString(day);
         dest.writeDouble(waveSizeFt);
-        dest.writeInt(score);
+        dest.writeDouble(score);
         dest.writeList(warnings);
     }
 
@@ -64,11 +64,11 @@ public class Beach implements Parcelable {
         }
     };
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public String getSpotId() {
+    public int getSpotId() {
         return spotId;
     }
 

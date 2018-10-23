@@ -37,8 +37,12 @@ public class BeachLoader {
             if (response != null) {
                 ArrayList<Beach> beaches = new ArrayList<>();
                 beaches = parseResponse(response, beachId, beachName);
+                if (beaches != null && beaches.size() > 0) {
+                    return beaches;
+                }
             }
         }
+        return null;
     }
 
     private static ArrayList<Beach> parseResponse(String response,
@@ -61,14 +65,14 @@ public class BeachLoader {
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
                 //TODO Calculate Score Here
-                int score;
+                double score=getScore(swellScore, tideScore, windScore);
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
                 ArrayList<String> warnings = new ArrayList<>();
                 for (int i = 0; i < warningsObject.length(); i++) {
                     warnings.add(warningsObject.getString(i));
                 }
-                Beach beach = new Beach(beachId, beachName, score, warnings);
+                Beach beach = new Beach(beachId, beachName, date, day, waveSizeFt, score, warnings);
                 beaches.add(beach);
             }
             return beaches;
@@ -77,7 +81,30 @@ public class BeachLoader {
             e.printStackTrace();
             Log.e("parseResponse Failure", "Failure Parsing with response: "
                     + response);
+            return null;
         }
+    }
+
+    private static int assignScore(String type){
+        if(type.equals("Poor-Fair"))
+            return 1;
+        if(type.equals("Fair"))
+            return 2;
+        if(type.equals("Fair-Good"))
+            return 3;
+        if(type.equals("Good"))
+            return 4;
+        return 0;
+    }
+
+    private static double getScore(String swell, String tide, String wind){
+        int score = 0;
+
+        score += assignScore(swell);
+        score += assignScore(tide);
+        score += assignScore(wind);
+
+        return ((score/(double)score) * 10);
     }
 
     private static URL getBeachUrl(int beachId) {
