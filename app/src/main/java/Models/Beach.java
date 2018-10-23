@@ -15,7 +15,11 @@ public class Beach implements Parcelable {
     private ArrayList<String> warnings;
 
 
+<<<<<<< HEAD
     public Beach(int spotId, String spotName, String date, String day,
+=======
+    public Beach(String spotId, String spotName, String date, String day,
+>>>>>>> 8c5cf0f2c7a34b9205b50219a5da5026c4f6c434
                  double waveSizeFt, double score, ArrayList<String> warnings) {
         this.spotId = spotId;
         this.spotName = spotName;
