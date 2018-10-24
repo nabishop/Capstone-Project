@@ -39,7 +39,8 @@ public class CountyLoader {
 
                 if (response != null) {
                     List<County> countyList = parseResponse(response);
-
+                    if (countyList != null)
+                        return countyList;
                 }
             }
 
@@ -53,11 +54,11 @@ public class CountyLoader {
             List<County> countyList = new ArrayList<>();
 
             for (int x = 0; x < results.length(); x++) {
-                JSONObject county = results.getJSONObject(x);
-
+                JSONObject countyObject = results.getJSONObject(x);
+                County newCounty = countyBuilder(countyObject);
+                countyList.add(newCounty);
             }
-            return null;
-
+            return countyList;
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("parseResponse Failure", "Exception: " + e);
@@ -73,7 +74,7 @@ public class CountyLoader {
             int spot_id = countyObject.getInt(JSONParsing.SPOT_ID);
             String spotName = countyObject.getString(JSONParsing.SPOT_NAME);
 
-            ArrayList<Beach> beachArrayList = new ArrayList<>();
+            ArrayList<Beach> beachArrayList;
             beachArrayList = BeachLoader.getBeach(spotName, spot_id);
             County county = new County(countyName, beachArrayList);
             return county;

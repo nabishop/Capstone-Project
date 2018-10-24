@@ -35,7 +35,8 @@ public class BeachLoader {
             String response = Connection.urlRequest(request);
 
             if (response != null) {
-                ArrayList<Beach> beaches = new ArrayList<>();
+                ArrayList<Beach> beaches;
+
                 beaches = parseResponse(response, beachId, beachName);
                 if (beaches != null && beaches.size() > 0) {
                     return beaches;
@@ -65,7 +66,6 @@ public class BeachLoader {
                 String swellScore = scoreDetailObject.getString(JSONParsing.SCORE_SWELL);
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
-                //TODO Calculate Score Here
                 double score=getScore(swellScore, tideScore, windScore);
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
