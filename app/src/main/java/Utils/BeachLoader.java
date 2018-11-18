@@ -34,19 +34,33 @@ public class BeachLoader {
         if (request != null) {
             String response = Connection.urlRequest(request);
 
-            if (response != null) {
-                ArrayList<Beach> beaches = new ArrayList<>();
-                beaches = parseResponse(response, beachId, beachName);
-            }
+            if (response != null)
+                return parseResponse(response, beachId, beachName);
         }
+        return null;
     }
 
-    private static double rankScore(String category) {
+    private static int rankScore(String category) {
+        int score = 0;
 
+        switch (category) {
+            case "Poor":
+                score = 1;
+            case "Poor-Fair":
+                score = 2;
+            case "Fair":
+                score = 3;
+            case "Fair-Good":
+                score = 4;
+            case "Good":
+                score = 5;
+        }
+
+        return score;
     }
 
     private static double calculateAvgScore(String swell, String tide, String wind) {
-
+        return (rankScore(swell) + rankScore(tide) + rankScore(wind)) / (double) 3;
     }
 
     private static ArrayList<Beach> parseResponse(String response,
@@ -68,15 +82,14 @@ public class BeachLoader {
                 String swellScore = scoreDetailObject.getString(JSONParsing.SCORE_SWELL);
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
-                //TODO Calculate Score Here
-                double score;
+                double score = calculateAvgScore(swellScore, tideScore, windScore);
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
                 ArrayList<String> warnings = new ArrayList<>();
                 for (int i = 0; i < warningsObject.length(); i++) {
                     warnings.add(warningsObject.getString(i));
                 }
-                Beach beach = new Beach(beachId, beachName, score, warnings);
+                Beach beach = new Beach(beachId, beachName, date, day, waveSizeFt, score, warnings);
                 beaches.add(beach);
             }
             return beaches;
