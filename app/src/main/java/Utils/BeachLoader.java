@@ -34,12 +34,24 @@ public class BeachLoader {
         if (request != null) {
             String response = Connection.urlRequest(request);
 
+<<<<<<< HEAD
             if (response != null)
                 return parseResponse(response, beachId, beachName);
+=======
+            if (response != null) {
+                ArrayList<Beach> beaches;
+
+                beaches = parseResponse(response, beachId, beachName);
+                if (beaches != null && beaches.size() > 0) {
+                    return beaches;
+                }
+            }
+>>>>>>> 1e62b489dffafef3773ec8678acf2c9b9657b359
         }
         return null;
     }
 
+<<<<<<< HEAD
     private static int rankScore(String category) {
         int score = 0;
 
@@ -62,6 +74,8 @@ public class BeachLoader {
     private static double calculateAvgScore(String swell, String tide, String wind) {
         return (rankScore(swell) + rankScore(tide) + rankScore(wind)) / (double) 3;
     }
+=======
+>>>>>>> 1e62b489dffafef3773ec8678acf2c9b9657b359
 
     private static ArrayList<Beach> parseResponse(String response,
                                                   int beachId, String beachName) {
@@ -82,7 +96,11 @@ public class BeachLoader {
                 String swellScore = scoreDetailObject.getString(JSONParsing.SCORE_SWELL);
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
+<<<<<<< HEAD
                 double score = calculateAvgScore(swellScore, tideScore, windScore);
+=======
+                double score=getScore(swellScore, tideScore, windScore);
+>>>>>>> 1e62b489dffafef3773ec8678acf2c9b9657b359
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
                 ArrayList<String> warnings = new ArrayList<>();
@@ -100,6 +118,28 @@ public class BeachLoader {
                     + response);
             return null;
         }
+    }
+
+    private static int assignScore(String type){
+        if(type.equals("Poor-Fair"))
+            return 1;
+        if(type.equals("Fair"))
+            return 2;
+        if(type.equals("Fair-Good"))
+            return 3;
+        if(type.equals("Good"))
+            return 4;
+        return 0;
+    }
+
+    private static double getScore(String swell, String tide, String wind){
+        int score = 0;
+
+        score += assignScore(swell);
+        score += assignScore(tide);
+        score += assignScore(wind);
+
+        return ((score/(double)score) * 10);
     }
 
     private static URL getBeachUrl(int beachId) {
