@@ -6,9 +6,13 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import Models.Beach;
 
@@ -41,6 +45,7 @@ public class BeachLoader {
 
                 beaches = parseResponse(response, beachId, beachName);
                 if (beaches != null && beaches.size() > 0) {
+                    Collections.sort(beaches);
                     return beaches;
                 }
             }
@@ -82,7 +87,6 @@ public class BeachLoader {
 
                 String date = beachObject.getString(JSONParsing.DATE);
                 String day = beachObject.getString(JSONParsing.DAY);
-                String hour = beachObject.getString(JSONParsing.HOUR);
                 double waveSizeFt = beachObject.getDouble(JSONParsing.WAVE_SIZE_FT);
 
                 JSONObject scoreDetailObject = beachObject
@@ -110,26 +114,26 @@ public class BeachLoader {
         }
     }
 
-    private static int assignScore(String type){
-        if(type.equals("Poor-Fair"))
+    private static int assignScore(String type) {
+        if (type.equals("Poor-Fair"))
             return 1;
-        if(type.equals("Fair"))
+        if (type.equals("Fair"))
             return 2;
-        if(type.equals("Fair-Good"))
+        if (type.equals("Fair-Good"))
             return 3;
-        if(type.equals("Good"))
+        if (type.equals("Good"))
             return 4;
         return 0;
     }
 
-    private static double getScore(String swell, String tide, String wind){
+    private static double getScore(String swell, String tide, String wind) {
         int score = 0;
 
         score += assignScore(swell);
         score += assignScore(tide);
         score += assignScore(wind);
 
-        return ((score/(double)score) * 10);
+        return ((score / (double) score) * 10);
     }
 
     private static URL getBeachUrl(int beachId) {

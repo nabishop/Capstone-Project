@@ -5,33 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.CollapsingToolbarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:elevation="4dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="200dp"
+            android:elevation="4dp">
 
-            <ImageView
-                android:id="@+id/county_fragment_beach_image_top"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight=".95"
-                android:scaleType="centerCrop"
-                android:src="@drawable/county_test" />
-
-            <TextView
-                android:id="@+id/county_fragment_county_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".05"
-                android:textColor="#000000"
-                tools:text="San luis Obispo" />
-        </LinearLayout>
+                android:orientation="vertical">
 
-    </android.support.design.widget.CollapsingToolbarLayout>
+                <ImageView
+                    android:id="@+id/county_fragment_beach_image_top"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".95"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/county_test" />
+
+                <TextView
+                    android:id="@+id/county_fragment_county_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".05"
+                    android:textColor="#000000"
+                    tools:text="FEATURED BEACH: San luis Obispo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Subscores" />
+            </LinearLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/county_fragment_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
