@@ -90,7 +90,7 @@ public class BeachLoader {
                 String swellScore = scoreDetailObject.getString(JSONParsing.SCORE_SWELL);
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
-                double score = getScore(swellScore, tideScore, windScore);
+                int score = getScore(swellScore, tideScore, windScore);
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
                 ArrayList<String> warnings = new ArrayList<>();

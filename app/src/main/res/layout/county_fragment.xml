@@ -22,7 +22,7 @@
 
                 <ImageView
                     android:id="@+id/county_fragment_beach_image_top"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight=".95"
                     android:contentDescription="A picture of the best beach for that day"

@@ -15,6 +15,8 @@ public class CursorHelper {
 
         Cursor cursor = context.getContentResolver().query(Contract.BeachEntry.CONTENT_URI,
                 columnsToRetrieve, null, null, null);
+        if(cursor == null)
+            return null;
 
         if (cursor.moveToFirst()) {
             ArrayList<Integer> beachList = new ArrayList<>();
