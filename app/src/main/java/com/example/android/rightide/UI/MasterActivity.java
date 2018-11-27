@@ -36,7 +36,7 @@ public class MasterActivity extends AppCompatActivity {
 
         ArrayList<Integer> currentFavoritedBeaches = CursorHelper.getFavoritedBeacheIds(this);
         if (currentFavoritedBeaches != null)
-            setUpFavoritesFragment();
+            setUpFavoritesFragment(currentFavoritedBeaches);
         else
             setUpCountyFragment();
     }
@@ -49,7 +49,7 @@ public class MasterActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_favorites:
-                        setUpFavoritesFragment();
+                        setUpFavoritesFragment(CursorHelper.getFavoritedBeacheIds(context));
                         return true;
                     case R.id.navigation_county:
                         setUpCountyFragment();
@@ -68,18 +68,31 @@ public class MasterActivity extends AppCompatActivity {
     }
 
     public void setUpCountyFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.master_activity_fragment, new CountyFragment(), null).commit();
+        if (getSupportFragmentManager().findFragmentByTag(ActiveFragmentTags.TAG_COUNTY_FRAGMENT) == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.master_activity_fragment, new CountyFragment(), null).commit();
+        }
     }
 
-    public void setUpFavoritesFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.master_activity_fragment, new FavoitesFragment(), null).commit();
+    public void setUpFavoritesFragment(ArrayList<Integer> beachIds) {
+        if (getSupportFragmentManager().findFragmentByTag(ActiveFragmentTags.TAG_FAVORITES_FRAGMENT) == null) {
+            Bundle bundle = new Bundle();
+            bundle.putIntegerArrayList(ActiveFragmentTags.TAG_FAVORITES_LIST, beachIds);
+
+            FavoitesFragment favoitesFragment = new FavoitesFragment();
+            favoitesFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.master_activity_fragment, favoitesFragment, null).commit();
+        }
     }
 
     public void setUpExploreFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.master_activity_fragment, new ExploreFragment(), null).commit();
+        if (getSupportFragmentManager().findFragmentByTag(ActiveFragmentTags.TAG_EXPLORE_FRAGMENT) == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.master_activity_fragment, new ExploreFragment(), null).commit();
+        }
     }
 
     public void setUpSettingsFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.master_activity_fragment, new SettingsFragment(), null).commit();
+        if (getSupportFragmentManager().findFragmentByTag(ActiveFragmentTags.TAG_SETTINGS_FRAGMENT) == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.master_activity_fragment, new SettingsFragment(), null).commit();
+        }
     }
 }
