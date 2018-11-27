@@ -2,6 +2,7 @@ package com.example.android.rightide.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.android.rightide.R;
+
+import java.util.ArrayList;
+
+import ContentProvider.BeachContentProvider;
+import ContentProvider.Contract;
+import ContentProvider.CursorHelper;
 
 public class MasterActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
@@ -27,7 +34,11 @@ public class MasterActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(getResources().getInteger(R.integer.favorites_position));
         menuItem.setChecked(true);
 
-        setUpFavoritesFragment();
+        ArrayList<Integer> currentFavoritedBeaches = CursorHelper.getFavoritedBeacheIds(this);
+        if (currentFavoritedBeaches != null)
+            setUpFavoritesFragment();
+        else
+            setUpCountyFragment();
     }
 
     public BottomNavigationView.OnNavigationItemSelectedListener createNavigationBar(final Context context) {

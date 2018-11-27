@@ -35,6 +35,19 @@ public class BeachContentProvider extends ContentProvider {
         return true;
     }
 
+    public boolean checkIfFavoritesExist() {
+        final SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, new String[]{"*"},
+                null, null, null, null, null, null);
+
+        if(cursor==null || !cursor.moveToFirst())
+            return false;
+
+        cursor.close();
+        db.close();
+        return true;
+    }
+
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
@@ -60,6 +73,7 @@ public class BeachContentProvider extends ContentProvider {
         }
 
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        db.close();
         return retCursor;
     }
 
@@ -91,6 +105,7 @@ public class BeachContentProvider extends ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
+        db.close();
         return returnUri;
     }
 
@@ -119,6 +134,7 @@ public class BeachContentProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
+        db.close();
         return retInt;
     }
 
@@ -141,6 +157,7 @@ public class BeachContentProvider extends ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
+        db.close();
         return retInt;
     }
 }

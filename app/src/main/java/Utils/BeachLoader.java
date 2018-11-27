@@ -72,10 +72,6 @@ public class BeachLoader {
         return score;
     }
 
-    private static double calculateAvgScore(String swell, String tide, String wind) {
-        return (rankScore(swell) + rankScore(tide) + rankScore(wind)) / (double) 3;
-    }
-
     private static ArrayList<Beach> parseResponse(String response,
                                                   int beachId, String beachName) {
         try {
@@ -94,7 +90,7 @@ public class BeachLoader {
                 String swellScore = scoreDetailObject.getString(JSONParsing.SCORE_SWELL);
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
-                double score = calculateAvgScore(swellScore, tideScore, windScore);
+                double score = getScore(swellScore, tideScore, windScore);
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
                 ArrayList<String> warnings = new ArrayList<>();
@@ -126,14 +122,14 @@ public class BeachLoader {
         return 0;
     }
 
-    private static double getScore(String swell, String tide, String wind) {
+    private static int getScore(String swell, String tide, String wind) {
         int score = 0;
 
         score += assignScore(swell);
         score += assignScore(tide);
         score += assignScore(wind);
 
-        return ((score / (double) score) * 10);
+        return ((score / 12) * 10);
     }
 
     private static URL getBeachUrl(int beachId) {

@@ -8,18 +8,18 @@ import java.util.ArrayList;
 
 public class Beach implements Comparable {
     private int spotId;
-    private String spotName;
+    private String beachName;
     private String date;
     private String day;
     private double waveSizeFt;
-    private double score;
+    private int score;
     private ArrayList<String> warnings;
 
 
-    public Beach(int spotId, String spotName, String date, String day,
-                 double waveSizeFt, double score, ArrayList<String> warnings) {
+    public Beach(int spotId, String beachName, String date, String day,
+                 double waveSizeFt, int score, ArrayList<String> warnings) {
         this.spotId = spotId;
-        this.spotName = spotName;
+        this.beachName = beachName;
         this.date = date;
         this.day = day;
         this.waveSizeFt = waveSizeFt;
@@ -28,7 +28,7 @@ public class Beach implements Comparable {
     }
 
 
-    public double getScore() {
+    public int getScore() {
         return score;
     }
 
@@ -36,8 +36,8 @@ public class Beach implements Comparable {
         return spotId;
     }
 
-    public String getSpotName() {
-        return spotName;
+    public String getBeachName() {
+        return beachName;
     }
 
     public ArrayList<String> getWarnings() {
