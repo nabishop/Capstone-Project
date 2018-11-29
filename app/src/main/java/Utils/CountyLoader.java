@@ -6,7 +6,6 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +13,11 @@ import java.util.List;
 import Models.Beach;
 import Models.County;
 
+import static Utils.Connection.getURL;
+
 // a bunch of helper strings used for parsing
 public class CountyLoader {
-    private static class JSONParsing {
+    public static class JSONParsing {
         public static final String URL = "http://api.spitcast.com/api/county/spots";
         public static final String[] COUNTIES = {"Del Norte", "Humboldt", "Mendocino",
                 "Sonoma", "Marin", "San Fransisco", "Santa Cruz", "San Mateo", "Monterey",
@@ -33,7 +34,9 @@ public class CountyLoader {
     // about the beaches and what not
     public static List<County> getCountyList(String countyName) {
         if (countyName != null) {
-            URL countyRequest = getCountyURL(countyName);
+            Uri requesting = Uri.parse(CountyLoader.JSONParsing.URL).buildUpon()
+                    .appendPath(countyName).build();
+            URL countyRequest = getURL(requesting);
             if (countyRequest != null) {
                 String response = Connection.urlRequest(countyRequest);
 
@@ -85,22 +88,4 @@ public class CountyLoader {
             return null;
         }
     }
-
-    // creates the URL needed for getting the county URL
-    // takes in a String that is the county name and tries to return a correct URL
-    // if something fails then a log error message is printed with the attempted county
-    private static URL getCountyURL(String countyName) {
-        Uri requesting = Uri.parse(JSONParsing.URL).buildUpon()
-                .appendPath(countyName).build();
-        try {
-            return new URL(requesting.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            Log.e("getCountyUrl Failure", "County Name: " + countyName +
-                    " is not valid");
-            return null;
-        }
-    }
-
-
 }

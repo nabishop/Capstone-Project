@@ -1,9 +1,13 @@
 package Utils;
 
+import android.net.Uri;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 
@@ -59,6 +63,21 @@ public class Connection {
 
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    // creates the URL needed for getting the county URL
+    // takes in a String that is the county name and tries to return a correct URL
+    // if something fails then a log error message is printed with the attempted county
+    public static URL getURL(Uri requesting) {
+        try {
+            return new URL(requesting.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            Log.e("URL Failure", "URI: " + requesting.toString() +
+                    " is not valid");
             return null;
         }
     }
