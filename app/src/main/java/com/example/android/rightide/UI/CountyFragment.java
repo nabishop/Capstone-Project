@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,10 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.kc.unsplash.Unsplash;
+import com.kc.unsplash.models.Photo;
+import com.kc.unsplash.models.SearchResults;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +45,30 @@ import Models.County;
 import Utils.CountyLoader;
 import Utils.CountyLocationLoader;
 
+/* UNSPLASH API ANDROID LICENSE
+MIT License
+
+Copyright (c) 2017 Keenen Charles
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
+
 public class CountyFragment extends Fragment {
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -47,7 +77,10 @@ public class CountyFragment extends Fragment {
     private List<County> counties;
 
     private static CountyListBeachAdapter adapter;
+    ProgressBar progressBar;
     private TextView countyTextView;
+    private ImageView beachPicture;
+    Unsplash unsplash;
 
     public CountyFragment() {
     }
@@ -58,7 +91,6 @@ public class CountyFragment extends Fragment {
             case MasterActivity.REQUEST_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d("CountyFragment", "Location Permission Granted");
-                    getDeviceCurrentLocation();
                 } else {
                     Log.d("CountyFragment", "Location Permission Denied");
                     Toast.makeText(getContext(), "Heck! We need this to load your county automatically!",
@@ -73,6 +105,9 @@ public class CountyFragment extends Fragment {
         View root = inflater.inflate(R.layout.county_fragment, container, false);
 
         countyTextView = root.findViewById(R.id.county_fragment_county_name);
+        progressBar = root.findViewById(R.id.county_fragment_progress_bar);
+        beachPicture = root.findViewById(R.id.county_fragment_beach_image_top);
+        unsplash = new Unsplash(getResources().getString(R.string.unsplash_auth_key));
 
         getDeviceCurrentLocation();
 
@@ -87,8 +122,9 @@ public class CountyFragment extends Fragment {
                             Manifest.permission.ACCESS_FINE_LOCATION,
                     }, MasterActivity.REQUEST_LOCATION);
             Log.d("CountyFragment", "Location Permission Requested");
-        } else
+        } else {
             Log.d("CountyFragment", "Location Permission already Active");
+        }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
@@ -96,6 +132,8 @@ public class CountyFragment extends Fragment {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
+                    progressBar.setVisibility(View.VISIBLE);
+
                     lastLocation = location;
                     Log.d("CountyFragment", "Latitude is " + lastLocation.getLatitude()
                             + " and longitude is " + lastLocation.getLongitude());
@@ -131,26 +169,48 @@ public class CountyFragment extends Fragment {
                 return null;
 
             Log.d("ASyncTask", "lat is " + lists[0].get(0) + " long is " + lists[0].get(1));
-            String countyName = CountyLocationLoader.getCountyName(lists[0].get(0), lists[0].get(1));
-            Log.d("ASyncTask", "County name is: " + countyName);
-            return CountyLoader.getCountyList(countyName);
+            county = CountyLocationLoader.getCountyName(lists[0].get(0), lists[0].get(1));
+            Log.d("ASyncTask", "County name is: " + county);
+            return CountyLoader.getCountyList(county);
         }
 
         @Override
         protected void onPostExecute(List<County> counties) {
-            super.onPostExecute(counties);
+            progressBar.setVisibility(View.GONE);
 
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            RecyclerView recyclerView = view.findViewById(R.id.county_fragment_recycler_view);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setHasFixedSize(true);
+            if (counties != null) {
+                Collections.sort(counties);
 
-            Collections.sort(counties);
-            CountyListBeachAdapter countyListBeachAdapter = new CountyListBeachAdapter();
-            countyListBeachAdapter.setBeaches(counties);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+                RecyclerView recyclerView = view.findViewById(R.id.county_fragment_recycler_view);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setHasFixedSize(true);
 
-            recyclerView.setAdapter(countyListBeachAdapter);
-            Log.d("CountyFragment", "County Retrieval Success!! Counties is " + counties.toString());
+                String query = county + " " + counties.get(0).getBeachesInCounty().get(0).getBeachName();
+                unsplash.searchPhotos(query, new Unsplash.OnSearchCompleteListener() {
+                    @Override
+                    public void onComplete(SearchResults results) {
+                        List<Photo> photos = results.getResults();
+                        Photo best = photos.get(0);
+                        Picasso.get().load(best.getUrls().getRegular()).into(beachPicture);
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(getContext(), "Heck had trouble finding a photo!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                countyTextView.setText(county);
+
+                CountyListBeachAdapter countyListBeachAdapter = new CountyListBeachAdapter();
+                countyListBeachAdapter.setBeaches(counties);
+
+                recyclerView.setAdapter(countyListBeachAdapter);
+                Log.d("CountyFragment", "County Retrieval Success!! Counties is " + counties.toString());
+            } else {
+                Toast.makeText(getContext(), "Sorry! No beaches were found in your county!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

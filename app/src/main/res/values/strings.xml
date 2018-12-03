@@ -4,4 +4,5 @@
     <string name="navigation_county">County</string>
     <string name="navigation_explore">Explore</string>
     <string name="navigation_settings">Settings</string>
+    <string name="unsplash_auth_key">04d708347db2dbceacd791481161e4479ecc0d757a38e56e4603baf55d5da9b6</string>
 </resources>

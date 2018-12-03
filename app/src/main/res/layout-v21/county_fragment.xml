@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/county_fragment_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,7 +18,7 @@
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="260dp"
             android:layout_marginBottom="10dp"
             android:elevation="4dp">
 
@@ -23,18 +29,18 @@
 
                 <ImageView
                     android:id="@+id/county_fragment_beach_image_top"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight=".95"
                     android:contentDescription="A picture of the best beach for that day"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/county_test" />
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/county_fragment_county_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight=".05"
+                    android:padding="6dp"
                     android:textColor="#000000"
                     android:textSize="32sp"
                     tools:text="San luis Obispo, CA" />

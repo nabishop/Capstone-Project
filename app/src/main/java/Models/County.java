@@ -35,6 +35,10 @@ public class County implements Comparable {
     @Override
     public int compareTo(@NonNull Object o) {
         County next = (County) o;
-        return (int) (next.getAverageScore() - this.getAverageScore());
+        if (next.getAverageScore() > this.getAverageScore())
+            return 1;
+        else if (next.getAverageScore() < this.getAverageScore())
+            return -1;
+        return 0;
     }
 }
