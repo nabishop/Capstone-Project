@@ -11,13 +11,15 @@ import android.widget.TextView;
 import com.example.android.rightide.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Models.Beach;
+import Models.County;
 
 public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeachAdapter.BeachAdapterViewHolder> {
-    private ArrayList<Beach> beaches;
+    private List<County> beaches;
 
-    public void setBeaches(ArrayList<Beach> beaches) {
+    public void setBeaches(List<County> beaches) {
         this.beaches = beaches;
     }
 
@@ -31,8 +33,8 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
 
     @Override
     public void onBindViewHolder(@NonNull BeachAdapterViewHolder holder, int position) {
-        holder.beachName.setText(beaches.get(position).getBeachName());
-        holder.score.setText(String.valueOf(beaches.get(position).getScore()));
+        holder.beachName.setText(beaches.get(position).getBeachesInCounty().get(0).getBeachName());
+        holder.score.setText(String.valueOf(beaches.get(position).getAverageScore()));
 
     }
 

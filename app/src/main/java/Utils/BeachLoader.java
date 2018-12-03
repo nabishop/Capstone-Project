@@ -43,7 +43,6 @@ public class BeachLoader {
 
                 beaches = parseResponse(response, beachId, beachName);
                 if (beaches != null && beaches.size() > 0) {
-                    Collections.sort(beaches);
                     return beaches;
                 }
             }
@@ -90,6 +89,7 @@ public class BeachLoader {
     }
 
     private static int assignScore(String type) {
+        Log.d("JJJJJ", type);
         if (type.equals("Poor-Fair"))
             return 1;
         if (type.equals("Fair"))
@@ -108,7 +108,7 @@ public class BeachLoader {
         score += assignScore(tide);
         score += assignScore(wind);
 
-        return ((score / 12) * 10);
+        return (int) ((score / (double) 12) * 10);
     }
 
     private static URL getBeachUrl(int beachId) {

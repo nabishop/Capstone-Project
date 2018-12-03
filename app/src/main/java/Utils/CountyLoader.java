@@ -44,14 +44,12 @@ public class CountyLoader {
             Log.d(TAG, "Uri is " + requesting.toString());
             URL countyRequest = getURL(requesting);
             Log.d(TAG, "Url is " + countyRequest.toString());
-            if (countyRequest != null) {
-                String response = Connection.urlRequest(countyRequest);
+            String response = Connection.urlRequest(countyRequest);
 
-                if (response != null) {
-                    List<County> countyList = parseResponse(response);
-                    if (countyList != null)
-                        return countyList;
-                }
+            if (response != null) {
+                List<County> countyList = parseResponse(response);
+                if (countyList != null)
+                    return countyList;
             }
 
         }
@@ -66,12 +64,23 @@ public class CountyLoader {
             for (int x = 0; x < results.length(); x++) {
                 JSONObject countyObject = results.getJSONObject(x);
                 County newCounty = countyBuilder(countyObject);
+
+                double tempScore = 0;
+
+                ArrayList<Beach> beaches = newCounty.getBeachesInCounty();
+                int inner=0;
+                for (inner = 0; inner < beaches.size(); inner++) {
+                    Log.d("Parse Resoibse", "Temp score is INNER " + beaches.get(inner).getScore());
+                    tempScore += beaches.get(inner).getScore();
+                }
+                Log.d("Parse Resoibse", "Temp score is " + tempScore + " inner is " + inner);
+                newCounty.setAverageScore(tempScore / beaches.size());
                 countyList.add(newCounty);
             }
             return countyList;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("CountyLoader P Failure", "Exception: " + e);
+            Log.e("CountyLoader Parsing", "Exception: " + e);
             return null;
         }
     }
