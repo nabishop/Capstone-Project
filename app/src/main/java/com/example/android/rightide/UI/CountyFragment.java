@@ -96,11 +96,11 @@ public class CountyFragment extends Fragment {
                     lastLocation = location;
                     Log.d("CountyFragment", "Latitude is " + lastLocation.getLatitude()
                             + " and longitude is " + lastLocation.getLongitude());
-                    county = CountyLocationLoader.getCountyName(lastLocation.getLatitude(), lastLocation.getLongitude());
-                    counties = CountyLoader.getCountyList(county);
+                    List<Double> coordinates = new ArrayList<>();
+                    coordinates.add(lastLocation.getLatitude());
+                    coordinates.add(lastLocation.getLongitude());
 
-                    if (counties != null)
-                        loadUI(counties);
+                    new CountyListASyncTask().execute(coordinates);
                 } else {
                     Log.e("CountyFragment", "onComplete Location Error");
                     Toast.makeText(getContext(), "Unable to get current location!", Toast.LENGTH_LONG).show();
@@ -111,5 +111,25 @@ public class CountyFragment extends Fragment {
 
     private void loadUI(List<County> counties) {
         countyTextView.setText(counties.get(0).getCountyName());
+    }
+
+    private static class CountyListASyncTask extends AsyncTask<List<Double>, Void, List<County>> {
+
+        @Override
+        protected List<County> doInBackground(List<Double>... lists) {
+            if (lists == null || lists.length < 1 || lists[0] == null)
+                return null;
+
+            Log.d("ASyncTask", "lat is " + lists[0].get(0) + " long is " + lists[0].get(1));
+            String countyName = CountyLocationLoader.getCountyName(lists[0].get(0), lists[0].get(1));
+            Log.d("ASyncTask", "County name is: " + countyName);
+            return CountyLoader.getCountyList(countyName);
+        }
+
+        @Override
+        protected void onPostExecute(List<County> counties) {
+            super.onPostExecute(counties);
+            Log.d("CountyFragment", "County Retrieval Success!! Counties is " + counties.toString());
+        }
     }
 }

@@ -17,6 +17,8 @@ import static Utils.Connection.getURL;
 
 // a bunch of helper strings used for parsing
 public class CountyLoader {
+    private static final String TAG = "COUNTY_LOADER";
+
     private static class JSONParsing {
         public static final String URL = "http://api.spitcast.com/api/county/spots";
         public static final String[] COUNTIES = {"Del Norte", "Humboldt", "Mendocino",
@@ -34,9 +36,14 @@ public class CountyLoader {
     // about the beaches and what not
     public static List<County> getCountyList(String countyName) {
         if (countyName != null) {
+            countyName = countyName.replace(" ", "-");
+            countyName = countyName.toLowerCase();
+
             Uri requesting = Uri.parse(CountyLoader.JSONParsing.URL).buildUpon()
                     .appendPath(countyName).build();
+            Log.d(TAG, "Uri is " + requesting.toString());
             URL countyRequest = getURL(requesting);
+            Log.d(TAG, "Url is " + countyRequest.toString());
             if (countyRequest != null) {
                 String response = Connection.urlRequest(countyRequest);
 
