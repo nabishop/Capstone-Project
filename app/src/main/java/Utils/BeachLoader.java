@@ -38,8 +38,6 @@ public class BeachLoader {
         if (request != null) {
             String response = Connection.urlRequest(request);
 
-            if (response != null)
-                return parseResponse(response, beachId, beachName);
             if (response != null) {
                 ArrayList<Beach> beaches;
 
@@ -51,25 +49,6 @@ public class BeachLoader {
             }
         }
         return null;
-    }
-
-    private static int rankScore(String category) {
-        int score = 0;
-
-        switch (category) {
-            case "Poor":
-                score = 1;
-            case "Poor-Fair":
-                score = 2;
-            case "Fair":
-                score = 3;
-            case "Fair-Good":
-                score = 4;
-            case "Good":
-                score = 5;
-        }
-
-        return score;
     }
 
     private static ArrayList<Beach> parseResponse(String response,

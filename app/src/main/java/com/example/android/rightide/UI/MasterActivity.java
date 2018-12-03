@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import ContentProvider.BeachContentProvider;
 import ContentProvider.Contract;
 import ContentProvider.CursorHelper;
-import Location.Location;
 
 public class MasterActivity extends AppCompatActivity {
     public static final int REQUEST_LOCATION = 1000;

@@ -17,7 +17,7 @@ import static Utils.Connection.getURL;
 
 // a bunch of helper strings used for parsing
 public class CountyLoader {
-    public static class JSONParsing {
+    private static class JSONParsing {
         public static final String URL = "http://api.spitcast.com/api/county/spots";
         public static final String[] COUNTIES = {"Del Norte", "Humboldt", "Mendocino",
                 "Sonoma", "Marin", "San Fransisco", "Santa Cruz", "San Mateo", "Monterey",
@@ -64,7 +64,7 @@ public class CountyLoader {
             return countyList;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("parseResponse Failure", "Exception: " + e);
+            Log.e("CountyLoader P Failure", "Exception: " + e);
             return null;
         }
     }
