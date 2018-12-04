@@ -11,15 +11,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,7 +34,7 @@
                     android:layout_weight=".95"
                     android:contentDescription="A picture of the best beach for that day"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/county_test" />
+                    app:layout_collapseMode="parallax" />
 
                 <TextView
                     android:id="@+id/county_fragment_county_name"
@@ -46,6 +47,13 @@
             </LinearLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/county_fragment_recycler_view"
@@ -56,6 +64,6 @@
             android:paddingEnd="6dp"
             android:paddingRight="6dp" />
 
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

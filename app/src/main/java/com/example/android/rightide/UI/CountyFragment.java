@@ -150,10 +150,6 @@ public class CountyFragment extends Fragment {
         });
     }
 
-    private void loadUI(List<County> counties) {
-        countyTextView.setText(counties.get(0).getCountyName());
-    }
-
     private class CountyListASyncTask extends AsyncTask<List<Double>, Void, List<County>> {
         private Context context;
         private View view;
@@ -197,6 +193,7 @@ public class CountyFragment extends Fragment {
 
                     @Override
                     public void onError(String error) {
+                        beachPicture.setImageDrawable(getResources().getDrawable(R.drawable.county_test));
                         Toast.makeText(getContext(), "Heck had trouble finding a photo!", Toast.LENGTH_SHORT).show();
                     }
                 });
