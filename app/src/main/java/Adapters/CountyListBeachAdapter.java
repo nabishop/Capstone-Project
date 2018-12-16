@@ -46,7 +46,7 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BeachAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BeachAdapterViewHolder holder, final int position) {
         holder.beachName.setText(beaches.get(position).getBeachesInCounty().get(0).getBeachName());
         holder.score.setText(String.valueOf(beaches.get(position).getAverageScore()));
 
@@ -54,8 +54,8 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList(CountyFragment.SAVED_BEACHES_INSTANCE_KEY,
-                        new ArrayList<>(beaches));
+                bundle.putParcelable(CountyFragment.SAVED_BEACHES_INSTANCE_KEY,
+                        beaches.get(position));
                 BeachDetailFragment beachDetailFragment = new BeachDetailFragment();
                 beachDetailFragment.setArguments(bundle);
 
