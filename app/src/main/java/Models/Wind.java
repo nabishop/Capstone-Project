@@ -1,6 +1,9 @@
 package Models;
 
-public class Wind {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Wind implements Parcelable {
     private String windDirectionDegrees;
     private String windDirectionCompass;
     private String hour;
@@ -13,6 +16,25 @@ public class Wind {
         this.hour = hour;
         this.windSpeedMph = windSpeedMph;
     }
+
+    protected Wind(Parcel in) {
+        windDirectionDegrees = in.readString();
+        windDirectionCompass = in.readString();
+        hour = in.readString();
+        windSpeedMph = in.readDouble();
+    }
+
+    public static final Creator<Wind> CREATOR = new Creator<Wind>() {
+        @Override
+        public Wind createFromParcel(Parcel in) {
+            return new Wind(in);
+        }
+
+        @Override
+        public Wind[] newArray(int size) {
+            return new Wind[size];
+        }
+    };
 
     public double getWindSpeedMph() {
         return windSpeedMph;
@@ -30,4 +52,16 @@ public class Wind {
         return windDirectionDegrees;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(windDirectionDegrees);
+        dest.writeString(windDirectionCompass);
+        dest.writeString(hour);
+        dest.writeDouble(windSpeedMph);
+    }
 }

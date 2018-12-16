@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Looper;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -70,11 +71,14 @@ SOFTWARE.
  */
 
 public class CountyFragment extends Fragment {
+    private static final String SAVED_BEACHES_STATE = "saved_beaches";
+    public static final String SAVED_BEACHES_INSTANCE_KEY = "beaches_instance_key";
+
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     private Location lastLocation;
     private String county;
-    private List<County> counties;
+    private static List<County> countyList;
 
     private static CountyListBeachAdapter adapter;
     ProgressBar progressBar;
@@ -83,6 +87,13 @@ public class CountyFragment extends Fragment {
     Unsplash unsplash;
 
     public CountyFragment() {
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelableArrayList(SAVED_BEACHES_STATE, new ArrayList<>(countyList));
     }
 
     @Override
@@ -109,9 +120,15 @@ public class CountyFragment extends Fragment {
         beachPicture = root.findViewById(R.id.county_fragment_beach_image_top);
         unsplash = new Unsplash(getResources().getString(R.string.unsplash_auth_key));
 
-        getDeviceCurrentLocation();
+        if (savedInstanceState != null)
+            loadUI(countyList);
+        else
+            getDeviceCurrentLocation();
 
         return root;
+    }
+
+    private void loadUI(List<County> countyList) {
     }
 
     private void getDeviceCurrentLocation() {
@@ -174,8 +191,10 @@ public class CountyFragment extends Fragment {
         protected void onPostExecute(List<County> counties) {
             progressBar.setVisibility(View.GONE);
 
+
             if (counties != null) {
                 Collections.sort(counties);
+                countyList = counties;
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                 RecyclerView recyclerView = view.findViewById(R.id.county_fragment_recycler_view);
@@ -201,7 +220,7 @@ public class CountyFragment extends Fragment {
                 countyTextView.setText(county);
 
                 CountyListBeachAdapter countyListBeachAdapter = new CountyListBeachAdapter();
-                countyListBeachAdapter.setBeaches(counties);
+                countyListBeachAdapter.setBeachesAndContext(counties, getContext(), getFragmentManager());
 
                 recyclerView.setAdapter(countyListBeachAdapter);
                 Log.d("CountyFragment", "County Retrieval Success!! Counties is " + counties.toString());

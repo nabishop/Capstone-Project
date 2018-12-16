@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
-public class County implements Comparable {
+public class County implements Comparable, Parcelable {
     private String countyName;
     private ArrayList<Beach> beachesInCounty;
     private double averageScore;
@@ -15,6 +15,18 @@ public class County implements Comparable {
         this.countyName = countyName;
         this.beachesInCounty = beachesInCounty;
     }
+
+    public static final Creator<County> CREATOR = new Creator<County>() {
+        @Override
+        public County createFromParcel(Parcel in) {
+            return new County(in);
+        }
+
+        @Override
+        public County[] newArray(int size) {
+            return new County[size];
+        }
+    };
 
     public ArrayList<Beach> getBeachesInCounty() {
         return beachesInCounty;
@@ -41,4 +53,24 @@ public class County implements Comparable {
             return -1;
         return 0;
     }
+
+    protected County(Parcel in) {
+        this.countyName = in.readString();
+        this.beachesInCounty = in.readArrayList(Beach.class.getClassLoader());
+        this.averageScore = in.readDouble();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(countyName);
+        dest.writeList(beachesInCounty);
+        dest.writeDouble(averageScore);
+    }
+
+
 }
