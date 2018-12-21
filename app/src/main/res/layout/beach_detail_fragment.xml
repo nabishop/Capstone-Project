@@ -1,154 +1,413 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#baf8ff"
+    android:background="#fafafa"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/beach_detail_fragment_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:elevation="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/county_test" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorBlack" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/beach_detail_fragment_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".8"
-            android:padding="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/colorBlack"
-            android:textSize="38sp"
-            app:fontFamily="sans-serif"
-            tools:text="Pismo Beach" />
+        <ImageView
+            android:id="@+id/beach_detail_fragment_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:elevation="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/county_test" />
 
-        <TextView
-            android:id="@+id/beach_detail_fragment_score"
-            android:layout_width="0dp"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorBlack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".3"
             android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp">
+
+            <TextView
+                android:id="@+id/beach_detail_fragment_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".8"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/colorBlack"
+                android:textSize="38sp"
+                app:fontFamily="sans-serif"
+                tools:text="Pismo Beach" />
+
+            <TextView
+                android:id="@+id/beach_detail_fragment_score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/colorBlack"
+                android:textSize="30sp"
+                app:fontFamily="sans-serif"
+                tools:text="9/10" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/beach_detail_fragment_county_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:paddingBottom="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            tools:text="San Luis Obispo, California" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@color/colorBlack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp">
+
+                <ImageView
+                    android:id="@+id/detail_map_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/map_marker"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Directions"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_map_image" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp">
+
+                <ImageView
+                    android:id="@+id/detail_star_favorite_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star_outline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/detail_star_favorite_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Favorite"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_star_favorite_image" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp">
+
+                <ImageView
+                    android:id="@+id/detail_notification_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bell_ring_outline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/detail_notification_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Follow"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detail_notification_image" />
+
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="4dp"
+            android:background="@color/colorBlack" />
+
+        <TextView
+            android:id="@+id/beach_detail_fragment_warnings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/colorBlack"
-            android:textSize="30sp"
-            app:fontFamily="sans-serif"
-            tools:text="9/10" />
+            android:text="Warnings"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/beach_detail_fragment_no_warnings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="No Warnings Today!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/beach_detail_fragment_warnings_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="4dp"
+            android:background="@color/colorBlack" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="Today's Weather"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="6dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <TextView
+                    android:id="@+id/beach_detail_fragment_wave_height_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wave Height"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView3" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ruler"
+                    app:layout_constraintEnd_toEndOf="@+id/beach_detail_fragment_wave_height_tv"
+                    app:layout_constraintStart_toStartOf="@+id/beach_detail_fragment_wave_height_tv" />
+
+                <TextView
+                    android:id="@+id/beach_detail_fragment_wave_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:layout_constraintEnd_toEndOf="@+id/beach_detail_fragment_wave_height_tv"
+                    app:layout_constraintStart_toStartOf="@+id/beach_detail_fragment_wave_height_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/beach_detail_fragment_wave_height_tv"
+                    tools:text="8.1 ft" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/waves"
+                    app:layout_constraintEnd_toEndOf="@+id/beach_detail_fragment_tide_tv"
+                    app:layout_constraintStart_toStartOf="@+id/beach_detail_fragment_tide_tv" />
+
+                <TextView
+                    android:id="@+id/beach_detail_fragment_tide_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tide"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    app:layout_constraintEnd_toEndOf="@+id/beach_detail_fragment_tide"
+                    app:layout_constraintStart_toStartOf="@+id/beach_detail_fragment_tide"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                <TextView
+                    android:id="@+id/beach_detail_fragment_tide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/beach_detail_fragment_tide_tv"
+                    tools:text="Fair-Good" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/weather_windy"
+                    app:layout_constraintBottom_toTopOf="@+id/beach_detail_fragment_wind_tv"
+                    app:layout_constraintEnd_toEndOf="@+id/beach_detail_fragment_wind_tv"
+                    app:layout_constraintStart_toStartOf="@+id/beach_detail_fragment_wind_tv"
+                    app:layout_constraintVertical_chainStyle="spread_inside" />
+
+                <TextView
+                    android:id="@+id/beach_detail_fragment_wind_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wind"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView2" />
+
+                <TextView
+                    android:id="@+id/beach_detail_fragment_wind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:layout_constraintEnd_toEndOf="@+id/beach_detail_fragment_wind_tv"
+                    app:layout_constraintStart_toStartOf="@+id/beach_detail_fragment_wind_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/beach_detail_fragment_wind_tv"
+                    tools:text="Good" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <ImageView
+                    android:id="@+id/beach_detail_fragment_temperature_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/weather_cloudy"
+                    app:layout_constraintEnd_toEndOf="@+id/beach_detail_fragment_temperature"
+                    app:layout_constraintStart_toStartOf="@+id/beach_detail_fragment_temperature" />
+
+                <TextView
+                    android:id="@+id/beach_detail_fragment_temperature_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperature"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    app:layout_constraintEnd_toEndOf="@id/beach_detail_fragment_temperature_pic"
+                    app:layout_constraintStart_toStartOf="@id/beach_detail_fragment_temperature_pic"
+                    app:layout_constraintTop_toBottomOf="@id/beach_detail_fragment_temperature_pic" />
+
+                <TextView
+                    android:id="@+id/beach_detail_fragment_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:layout_constraintEnd_toEndOf="@id/beach_detail_fragment_temperature_tv"
+                    app:layout_constraintStart_toStartOf="@id/beach_detail_fragment_temperature_tv"
+                    app:layout_constraintTop_toBottomOf="@id/beach_detail_fragment_temperature_tv"
+                    tools:text="67 F / 19.6 C" />
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Wave Forecast"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/beach_detail_fragment_wave_graph"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:paddingTop="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Tide Forecast"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/beach_detail_fragment_tide_graph"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:padding="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Wind Forecast"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/beach_detail_fragment_wind_graph"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:padding="4dp" />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:background="@color/colorBlack" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp">
-
-            <ImageView
-                android:id="@+id/detail_map_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/map_marker"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Directions"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_map_image" />
-        </android.support.constraint.ConstraintLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp">
-
-            <ImageView
-                android:id="@+id/detail_star_favorite_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/star_outline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/detail_star_favorite_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_star_favorite_image"
-                tools:text="Favorite" />
-        </android.support.constraint.ConstraintLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp">
-
-            <ImageView
-                android:id="@+id/detail_notification_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bell_ring_outline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/detail_notification_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detail_notification_image"
-                tools:text="Follow" />
-
-        </android.support.constraint.ConstraintLayout>
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:background="@color/colorBlack" />
-
-</LinearLayout>
+</ScrollView>
