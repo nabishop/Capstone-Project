@@ -28,6 +28,9 @@ public class BeachDetailFragment extends Fragment {
         View root = inflater.inflate(R.layout.beach_detail_fragment, container, false);
 
         Bundle bundle = this.getArguments();
+        if (bundle == null)
+            return root;
+
         county = bundle.getParcelable(CountyFragment.SAVED_BEACHES_INSTANCE_KEY);
         beachName = county.getBeachesInCounty().get(0).getBeachName();
 
