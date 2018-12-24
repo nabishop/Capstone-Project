@@ -68,14 +68,15 @@ public class BeachLoader {
                 String swellScore = scoreDetailObject.getString(JSONParsing.SCORE_SWELL);
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
-                int score = getScore(swellScore, tideScore, windScore);
+                double score = getScore(swellScore, tideScore, windScore);
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
                 ArrayList<String> warnings = new ArrayList<>();
                 for (int i = 0; i < warningsObject.length(); i++) {
                     warnings.add(warningsObject.getString(i));
                 }
-                Beach beach = new Beach(beachId, beachName, date, day, waveSizeFt, score, warnings);
+                Beach beach = new Beach(beachId, beachName, date, day, waveSizeFt, score, warnings,
+                        assignScore(tideScore), assignScore(swellScore), assignScore(windScore));
                 beaches.add(beach);
             }
             return beaches;
@@ -88,27 +89,31 @@ public class BeachLoader {
         }
     }
 
-    private static int assignScore(String type) {
+    public static int assignScore(String type) {
         Log.d("JJJJJ", type);
-        if (type.equals("Poor-Fair"))
-            return 1;
-        if (type.equals("Fair"))
-            return 2;
-        if (type.equals("Fair-Good"))
-            return 3;
-        if (type.equals("Good"))
-            return 4;
+        switch (type) {
+            case "Poor":
+                return 1;
+            case "Poor-Fair":
+                return 2;
+            case "Fair":
+                return 3;
+            case "Fair-Good":
+                return 4;
+            case "Good":
+                return 5;
+        }
         return 0;
     }
 
-    private static int getScore(String swell, String tide, String wind) {
+    private static double getScore(String swell, String tide, String wind) {
         int score = 0;
 
         score += assignScore(swell);
         score += assignScore(tide);
         score += assignScore(wind);
 
-        return (int) ((score / (double) 12) * 10);
+        return ((score / (double) 15) * 10);
     }
 
     private static URL getBeachUrl(int beachId) {

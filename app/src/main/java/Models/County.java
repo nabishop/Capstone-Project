@@ -10,10 +10,18 @@ public class County implements Comparable, Parcelable {
     private String countyName;
     private ArrayList<Beach> beachesInCounty;
     private double averageScore;
+    private double averageWaveHeight;
+    private double averageTideScore;
+    private double averageWindScore;
+    private double temperatureFahrenheit;
+    private String wetSuit;
 
-    public County(String countyName, ArrayList<Beach> beachesInCounty) {
+    public County(String countyName, ArrayList<Beach> beachesInCounty,
+                  double temperatureFahrenheit, String wetSuit) {
         this.countyName = countyName;
         this.beachesInCounty = beachesInCounty;
+        this.temperatureFahrenheit = temperatureFahrenheit;
+        this.wetSuit = wetSuit;
     }
 
     public static final Creator<County> CREATOR = new Creator<County>() {
@@ -27,6 +35,26 @@ public class County implements Comparable, Parcelable {
             return new County[size];
         }
     };
+
+    public double getAverageTideScore() {
+        return averageTideScore;
+    }
+
+    public double getAverageWindScore() {
+        return averageWindScore;
+    }
+
+    public double getTemperatureFahrenheit() {
+        return temperatureFahrenheit;
+    }
+
+    public void setAverageTideScore(double averageTideScore) {
+        this.averageTideScore = averageTideScore;
+    }
+
+    public void setAverageWindScore(double averageWindScore) {
+        this.averageWindScore = averageWindScore;
+    }
 
     public ArrayList<Beach> getBeachesInCounty() {
         return beachesInCounty;
@@ -44,6 +72,18 @@ public class County implements Comparable, Parcelable {
         return averageScore;
     }
 
+    public double getAverageWaveHeight() {
+        return averageWaveHeight;
+    }
+
+    public void setAverageWaveHeight(double averageWaveHeight) {
+        this.averageWaveHeight = averageWaveHeight;
+    }
+
+    public String getWetSuit() {
+        return wetSuit;
+    }
+
     @Override
     public int compareTo(@NonNull Object o) {
         County next = (County) o;
@@ -58,6 +98,11 @@ public class County implements Comparable, Parcelable {
         this.countyName = in.readString();
         this.beachesInCounty = in.readArrayList(Beach.class.getClassLoader());
         this.averageScore = in.readDouble();
+        this.averageWaveHeight = in.readDouble();
+        this.averageTideScore = in.readDouble();
+        this.averageWindScore = in.readDouble();
+        this.temperatureFahrenheit = in.readDouble();
+        this.wetSuit = in.readString();
     }
 
     @Override
@@ -70,6 +115,11 @@ public class County implements Comparable, Parcelable {
         dest.writeString(countyName);
         dest.writeList(beachesInCounty);
         dest.writeDouble(averageScore);
+        dest.writeDouble(averageWaveHeight);
+        dest.writeDouble(averageTideScore);
+        dest.writeDouble(averageWindScore);
+        dest.writeDouble(temperatureFahrenheit);
+        dest.writeString(wetSuit);
     }
 
 

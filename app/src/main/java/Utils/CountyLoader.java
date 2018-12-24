@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -14,13 +15,14 @@ import Models.Beach;
 import Models.County;
 
 import static Utils.Connection.getURL;
+import static Utils.Connection.urlRequest;
 
 // a bunch of helper strings used for parsing
 public class CountyLoader {
     private static final String TAG = "COUNTY_LOADER";
 
     private static class JSONParsing {
-        public static final String URL = "http://api.spitcast.com/api/county/spots";
+        public static final String SPOTS_URL = "http://api.spitcast.com/api/county/spots";
         public static final String[] COUNTIES = {"Del Norte", "Humboldt", "Mendocino",
                 "Sonoma", "Marin", "San Fransisco", "Santa Cruz", "San Mateo", "Monterey",
                 "San Luis Obispo", "Santa Barbara", "Ventura", "Los Angeles",
@@ -28,6 +30,10 @@ public class CountyLoader {
         public static final String COUNTY = "county";
         public static final String SPOT_ID = "spot_id";
         public static final String SPOT_NAME = "spot_name";
+
+        public static final String TEMP_URL = "http://api.spitcast.com/api/county/water-temperature";
+        public static final String TEMP_FARH_KEY = "fahrenheit";
+        public static final String WETSUIT_KEY = "wetsuit";
     }
 
     // public helper function that returns a list of counties.
@@ -39,7 +45,7 @@ public class CountyLoader {
             countyName = countyName.replace(" ", "-");
             countyName = countyName.toLowerCase();
 
-            Uri requesting = Uri.parse(CountyLoader.JSONParsing.URL).buildUpon()
+            Uri requesting = Uri.parse(CountyLoader.JSONParsing.SPOTS_URL).buildUpon()
                     .appendPath(countyName).build();
             Log.d(TAG, "Uri is " + requesting.toString());
             URL countyRequest = getURL(requesting);
@@ -68,7 +74,7 @@ public class CountyLoader {
                 double tempScore = 0;
 
                 ArrayList<Beach> beaches = newCounty.getBeachesInCounty();
-                int inner=0;
+                int inner = 0;
                 for (inner = 0; inner < beaches.size(); inner++) {
                     Log.d("Parse Resoibse", "Temp score is INNER " + beaches.get(inner).getScore());
                     tempScore += beaches.get(inner).getScore();
@@ -85,6 +91,31 @@ public class CountyLoader {
         }
     }
 
+    private static ArrayList getTempNWetSuit(String countyName) throws JSONException {
+        ArrayList results = new ArrayList();
+        countyName = countyName.replace(" ", "-");
+        countyName = countyName.toLowerCase();
+
+        Uri requesting = Uri.parse(JSONParsing.TEMP_URL).buildUpon().appendPath(countyName).build();
+        URL tempRequest = getURL(requesting);
+
+        if (tempRequest != null) {
+            String response = urlRequest(tempRequest);
+
+            if (response != null) {
+                JSONObject tempObject = new JSONObject(response);
+
+                results.add(tempObject.getDouble(JSONParsing.TEMP_FARH_KEY));
+                results.add(tempObject.getString(JSONParsing.WETSUIT_KEY));
+                Log.e("getTempNWetSuit", "added temp " + tempObject.getDouble(JSONParsing.TEMP_FARH_KEY));
+                Log.e("getTempNWetSuit", "added suit " + tempObject.getString(JSONParsing.WETSUIT_KEY));
+                return results;
+            }
+        }
+        Log.e("getTempNWetSuit", "returning null :(");
+        return null;
+    }
+
     // builds the county, uses parsing information for the beach spot_ids to
     // make the counry objects.
     private static County countyBuilder(JSONObject countyObject) {
@@ -95,7 +126,10 @@ public class CountyLoader {
 
             ArrayList<Beach> beachArrayList;
             beachArrayList = BeachLoader.getBeach(spotName, spot_id);
-            County county = new County(countyName, beachArrayList);
+
+            ArrayList results = getTempNWetSuit(countyName);
+            County county = new County(countyName, beachArrayList,
+                    (double) results.get(0), (String) results.get(1));
             return county;
 
         } catch (Exception e) {

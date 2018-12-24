@@ -12,12 +12,17 @@ public class Beach implements Comparable, Parcelable {
     private String date;
     private String day;
     private double waveSizeFt;
-    private int score;
+    private double score;
+    private int tideScore;
+    private int swellScore;
+    private int windScore;
+
     private ArrayList<String> warnings;
 
 
     public Beach(int spotId, String beachName, String date, String day,
-                 double waveSizeFt, int score, ArrayList<String> warnings) {
+                 double waveSizeFt, double score, ArrayList<String> warnings,
+                 int tideScore, int swellScore, int windScore) {
         this.spotId = spotId;
         this.beachName = beachName;
         this.date = date;
@@ -25,6 +30,9 @@ public class Beach implements Comparable, Parcelable {
         this.waveSizeFt = waveSizeFt;
         this.score = score;
         this.warnings = warnings;
+        this.tideScore = tideScore;
+        this.swellScore = swellScore;
+        this.windScore = windScore;
     }
 
 
@@ -34,8 +42,11 @@ public class Beach implements Comparable, Parcelable {
         date = in.readString();
         day = in.readString();
         waveSizeFt = in.readDouble();
-        score = in.readInt();
+        score = in.readDouble();
         warnings = in.createStringArrayList();
+        tideScore = in.readInt();
+        swellScore = in.readInt();
+        windScore = in.readInt();
     }
 
     public static final Creator<Beach> CREATOR = new Creator<Beach>() {
@@ -50,7 +61,7 @@ public class Beach implements Comparable, Parcelable {
         }
     };
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
@@ -64,6 +75,30 @@ public class Beach implements Comparable, Parcelable {
 
     public ArrayList<String> getWarnings() {
         return warnings;
+    }
+
+    public int getSwellScore() {
+        return swellScore;
+    }
+
+    public int getTideScore() {
+        return tideScore;
+    }
+
+    public int getWindScore() {
+        return windScore;
+    }
+
+    public double getWaveSizeFt() {
+        return waveSizeFt;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getDay() {
+        return day;
     }
 
     @Override
@@ -84,7 +119,10 @@ public class Beach implements Comparable, Parcelable {
         dest.writeString(date);
         dest.writeString(day);
         dest.writeDouble(waveSizeFt);
-        dest.writeInt(score);
+        dest.writeDouble(score);
         dest.writeStringList(warnings);
+        dest.writeInt(tideScore);
+        dest.writeInt(swellScore);
+        dest.writeInt(windScore);
     }
 }

@@ -20,20 +20,21 @@ import com.example.android.rightide.UI.BeachDetailFragment;
 import com.example.android.rightide.UI.CountyFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import Models.Beach;
 import Models.County;
 
 public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeachAdapter.BeachAdapterViewHolder> {
     private List<County> beaches;
-    private Context context;
     private FragmentManager fragmentManager;
 
 
-    public void setBeachesAndContext(List<County> beaches, Context context, FragmentManager fragmentManager) {
+    public void setBeachesAndContext(List<County> beaches, FragmentManager fragmentManager) {
         this.beaches = beaches;
-        this.context = context;
         this.fragmentManager = fragmentManager;
     }
 
@@ -48,7 +49,10 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
     @Override
     public void onBindViewHolder(@NonNull BeachAdapterViewHolder holder, final int position) {
         holder.beachName.setText(beaches.get(position).getBeachesInCounty().get(0).getBeachName());
-        holder.score.setText(String.valueOf(beaches.get(position).getAverageScore()));
+        holder.score.setText(String.format(Locale.ENGLISH, "%.2f",
+                beaches.get(position).getAverageScore()));
+
+        Date currentTime = Calendar.getInstance().getTime();
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override

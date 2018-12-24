@@ -163,7 +163,7 @@ public class CountyFragment extends Fragment {
         countyTextView.setText(county);
 
         CountyListBeachAdapter countyListBeachAdapter = new CountyListBeachAdapter();
-        countyListBeachAdapter.setBeachesAndContext(countyList, getContext(), getFragmentManager());
+        countyListBeachAdapter.setBeachesAndContext(countyList, getFragmentManager());
 
         recyclerView.setAdapter(countyListBeachAdapter);
         Log.d("CountyFragment", "County Retrieval Success!! Counties is " + countyList.toString());
@@ -258,9 +258,10 @@ public class CountyFragment extends Fragment {
                 countyTextView.setText(county);
 
                 CountyListBeachAdapter countyListBeachAdapter = new CountyListBeachAdapter();
-                countyListBeachAdapter.setBeachesAndContext(counties, getContext(), getFragmentManager());
+                countyListBeachAdapter.setBeachesAndContext(counties, getFragmentManager());
 
                 recyclerView.setAdapter(countyListBeachAdapter);
+                getActivity().setTitle("RighTide - " + countyList.get(0).getCountyName());
                 Log.d("CountyFragment", "County Retrieval Success!! Counties is " + counties.toString());
             } else {
                 Toast.makeText(getContext(), "Sorry! No beaches were found in your county!", Toast.LENGTH_LONG).show();
