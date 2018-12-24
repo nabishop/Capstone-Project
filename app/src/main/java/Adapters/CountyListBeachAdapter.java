@@ -54,7 +54,7 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putParcelable(CountyFragment.SAVED_BEACHES_INSTANCE_KEY,
+                bundle.putParcelable(CountyFragment.SAVED_BEACHES_STATE,
                         beaches.get(position));
                 BeachDetailFragment beachDetailFragment = new BeachDetailFragment();
                 beachDetailFragment.setArguments(bundle);

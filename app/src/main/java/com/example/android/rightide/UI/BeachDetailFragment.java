@@ -31,7 +31,7 @@ public class BeachDetailFragment extends Fragment {
         if (bundle == null)
             return root;
 
-        county = bundle.getParcelable(CountyFragment.SAVED_BEACHES_INSTANCE_KEY);
+        county = bundle.getParcelable(CountyFragment.SAVED_BEACHES_STATE);
         beachName = county.getBeachesInCounty().get(0).getBeachName();
 
         getActivity().setTitle(getActivity().getTitle() + " - " + beachName);
@@ -48,5 +48,6 @@ public class BeachDetailFragment extends Fragment {
 
     private void setUpUI(View root) {
         beachNameTextView = root.findViewById(R.id.beach_detail_fragment_name);
+
     }
 }

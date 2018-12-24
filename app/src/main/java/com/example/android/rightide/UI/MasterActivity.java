@@ -23,7 +23,7 @@ import ContentProvider.CursorHelper;
 
 public class MasterActivity extends AppCompatActivity {
     public static final int REQUEST_LOCATION = 1000;
-    private static final String PERMISSION_DENIED_MESSAGE = "Aw Heck! We promise we don't save any location data!";
+    private static final String PERMISSION_ACCEPTED_MESSAGE = "Thanks for Making The App Easier to Use!";
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
 
     @Override
@@ -59,7 +59,7 @@ public class MasterActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUEST_LOCATION:
-                Toast.makeText(getApplicationContext(), PERMISSION_DENIED_MESSAGE, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), PERMISSION_ACCEPTED_MESSAGE, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -71,8 +71,8 @@ SOFTWARE.
  */
 
 public class CountyFragment extends Fragment {
-    private static final String SAVED_BEACHES_STATE = "saved_beaches";
-    public static final String SAVED_BEACHES_INSTANCE_KEY = "beaches_instance_key";
+    public static final String SAVED_BEACHES_STATE = "saved_beaches";
+    private static final String SAVED_BEACHES_INSTANCE_KEY = "beaches_instance_key";
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -93,7 +93,8 @@ public class CountyFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelableArrayList(SAVED_BEACHES_STATE, new ArrayList<>(countyList));
+        if (countyList != null)
+            outState.putParcelableArrayList(SAVED_BEACHES_INSTANCE_KEY, new ArrayList<>(countyList));
     }
 
     @Override
@@ -120,15 +121,52 @@ public class CountyFragment extends Fragment {
         beachPicture = root.findViewById(R.id.county_fragment_beach_image_top);
         unsplash = new Unsplash(getResources().getString(R.string.unsplash_auth_key));
 
-        if (savedInstanceState != null)
-            loadUI(countyList);
-        else
+        if (savedInstanceState != null) {
+            countyList = savedInstanceState.getParcelableArrayList(SAVED_BEACHES_INSTANCE_KEY);
+            if (countyList != null)
+                loadUI(countyList, root);
+            else
+                getDeviceCurrentLocation();
+        } else
             getDeviceCurrentLocation();
+
+        if (countyList != null)
+            getActivity().setTitle("RighTide - " + countyList.get(0).getCountyName());
+        else
+            getActivity().setTitle("RighTide");
 
         return root;
     }
 
-    private void loadUI(List<County> countyList) {
+    private void loadUI(List<County> countyList, View view) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView recyclerView = view.findViewById(R.id.county_fragment_recycler_view);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        String query = county + " " + countyList.get(0).getBeachesInCounty().get(0).getBeachName();
+        unsplash.searchPhotos(query, new Unsplash.OnSearchCompleteListener() {
+            @Override
+            public void onComplete(SearchResults results) {
+                List<Photo> photos = results.getResults();
+                Photo best = photos.get(0);
+                Picasso.get().load(best.getUrls().getRegular()).into(beachPicture);
+            }
+
+            @Override
+            public void onError(String error) {
+                beachPicture.setImageDrawable(getResources().getDrawable(R.drawable.county_test));
+                Toast.makeText(getContext(), "Heck had trouble finding a photo!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        countyTextView.setText(county);
+
+        CountyListBeachAdapter countyListBeachAdapter = new CountyListBeachAdapter();
+        countyListBeachAdapter.setBeachesAndContext(countyList, getContext(), getFragmentManager());
+
+        recyclerView.setAdapter(countyListBeachAdapter);
+        Log.d("CountyFragment", "County Retrieval Success!! Counties is " + countyList.toString());
     }
 
     private void getDeviceCurrentLocation() {
