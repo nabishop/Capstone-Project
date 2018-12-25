@@ -93,6 +93,7 @@ public class CountyFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        Log.d("Save CountyFrag", "county list is " + countyList);
         if (countyList != null)
             outState.putParcelableArrayList(SAVED_BEACHES_INSTANCE_KEY, new ArrayList<>(countyList));
     }
@@ -121,10 +122,12 @@ public class CountyFragment extends Fragment {
         beachPicture = root.findViewById(R.id.county_fragment_beach_image_top);
         unsplash = new Unsplash(getResources().getString(R.string.unsplash_auth_key));
 
+        Log.d("Restoring CountyFrag", "Saved instance is " + savedInstanceState);
         if (savedInstanceState != null) {
             countyList = savedInstanceState.getParcelableArrayList(SAVED_BEACHES_INSTANCE_KEY);
+            Log.d("Restoring CountyFrag", "countylist is " + countyList);
             if (countyList != null)
-                loadUI(countyList, root);
+                loadUI(root);
             else
                 getDeviceCurrentLocation();
         } else
@@ -138,7 +141,8 @@ public class CountyFragment extends Fragment {
         return root;
     }
 
-    private void loadUI(List<County> countyList, View view) {
+    private void loadUI(View view) {
+        Log.d("Restoring CountyFrag", "loading ui");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         RecyclerView recyclerView = view.findViewById(R.id.county_fragment_recycler_view);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -232,7 +236,7 @@ public class CountyFragment extends Fragment {
 
             if (counties != null) {
                 Collections.sort(counties);
-                countyList = counties;
+                countyList = new ArrayList<>(counties);
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                 RecyclerView recyclerView = view.findViewById(R.id.county_fragment_recycler_view);

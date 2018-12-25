@@ -61,6 +61,7 @@ public class BeachLoader {
 
                 String date = beachObject.getString(JSONParsing.DATE);
                 String day = beachObject.getString(JSONParsing.DAY);
+                String hour = beachObject.getString(JSONParsing.HOUR);
                 double waveSizeFt = beachObject.getDouble(JSONParsing.WAVE_SIZE_FT);
 
                 JSONObject scoreDetailObject = beachObject
@@ -76,7 +77,7 @@ public class BeachLoader {
                     warnings.add(warningsObject.getString(i));
                 }
                 Beach beach = new Beach(beachId, beachName, date, day, waveSizeFt, score, warnings,
-                        assignScore(tideScore), assignScore(swellScore), assignScore(windScore));
+                        assignScore(tideScore), assignScore(swellScore), assignScore(windScore), hour);
                 beaches.add(beach);
             }
             return beaches;

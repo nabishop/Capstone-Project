@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +14,12 @@ import android.widget.TextView;
 import com.example.android.rightide.R;
 import com.jjoe64.graphview.GraphView;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
+import Adapters.CountyListBeachAdapter;
+import Adapters.WarningsListBeachDetailAdapter;
+import Models.Beach;
 import Models.County;
 
 public class BeachDetailFragment extends Fragment {
@@ -27,10 +33,14 @@ public class BeachDetailFragment extends Fragment {
     TextView tideTextView;
     TextView windTextView;
     TextView temperatureTextView;
+    TextView noWarningsTextView;
 
     GraphView waveGraphView;
     GraphView tideGraphView;
     GraphView windGraphView;
+
+    LinearLayoutManager warningsLinearLayoutManager;
+    RecyclerView warningsRecyclerView;
 
     public BeachDetailFragment() {
     }
@@ -64,6 +74,16 @@ public class BeachDetailFragment extends Fragment {
         String rounded = String.format(Locale.ENGLISH, "%.2f", county.getAverageScore()) + "/10";
         scoreTextView.setText(rounded);
 
+        ArrayList<Beach> warningHours = new ArrayList<>();
+        for (Beach beach : county.getBeachesInCounty()) {
+            if (!beach.getWarnings().isEmpty()) {
+                warningHours.add(beach);
+            }
+        }
+        if (!warningHours.isEmpty()) {
+            loadWarnings(warningHours);
+        }
+
         averageBeachStatistics();
 
         waveHeightTextView.setText(String.format("%s'", String.format(Locale.ENGLISH,
@@ -80,6 +100,16 @@ public class BeachDetailFragment extends Fragment {
 
     }
 
+    private void loadWarnings(ArrayList<Beach> warningHours) {
+        WarningsListBeachDetailAdapter adapter = new WarningsListBeachDetailAdapter();
+        adapter.setWarnings(warningHours);
+
+        noWarningsTextView.setVisibility(View.GONE);
+        warningsRecyclerView.setVisibility(View.VISIBLE);
+
+        warningsRecyclerView.setAdapter(adapter);
+    }
+
     private void setUpUI(View root) {
         beachNameTextView = root.findViewById(R.id.beach_detail_fragment_name);
         countyNameTextView = root.findViewById(R.id.beach_detail_fragment_county_name);
@@ -91,6 +121,12 @@ public class BeachDetailFragment extends Fragment {
         waveGraphView = root.findViewById(R.id.beach_detail_fragment_wave_graph);
         tideGraphView = root.findViewById(R.id.beach_detail_fragment_tide_graph);
         windGraphView = root.findViewById(R.id.beach_detail_fragment_wind_graph);
+        noWarningsTextView = root.findViewById(R.id.beach_detail_fragment_no_warnings);
+
+        warningsLinearLayoutManager = new LinearLayoutManager(getContext());
+        warningsRecyclerView = root.findViewById(R.id.beach_detail_fragment_warnings_rv);
+        warningsRecyclerView.setLayoutManager(warningsLinearLayoutManager);
+        warningsRecyclerView.setHasFixedSize(true);
     }
 
     private void averageBeachStatistics() {

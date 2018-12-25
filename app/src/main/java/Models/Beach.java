@@ -16,13 +16,14 @@ public class Beach implements Comparable, Parcelable {
     private int tideScore;
     private int swellScore;
     private int windScore;
+    private String hour;
 
     private ArrayList<String> warnings;
 
 
     public Beach(int spotId, String beachName, String date, String day,
                  double waveSizeFt, double score, ArrayList<String> warnings,
-                 int tideScore, int swellScore, int windScore) {
+                 int tideScore, int swellScore, int windScore, String hour) {
         this.spotId = spotId;
         this.beachName = beachName;
         this.date = date;
@@ -33,6 +34,7 @@ public class Beach implements Comparable, Parcelable {
         this.tideScore = tideScore;
         this.swellScore = swellScore;
         this.windScore = windScore;
+        this.hour = hour;
     }
 
 
@@ -47,6 +49,7 @@ public class Beach implements Comparable, Parcelable {
         tideScore = in.readInt();
         swellScore = in.readInt();
         windScore = in.readInt();
+        hour = in.readString();
     }
 
     public static final Creator<Beach> CREATOR = new Creator<Beach>() {
@@ -101,6 +104,10 @@ public class Beach implements Comparable, Parcelable {
         return day;
     }
 
+    public String getHour() {
+        return hour;
+    }
+
     @Override
     public int compareTo(@NonNull Object o) {
         Beach next = (Beach) o;
@@ -124,5 +131,6 @@ public class Beach implements Comparable, Parcelable {
         dest.writeInt(tideScore);
         dest.writeInt(swellScore);
         dest.writeInt(windScore);
+        dest.writeString(hour);
     }
 }
