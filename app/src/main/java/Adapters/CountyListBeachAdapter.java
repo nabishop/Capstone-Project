@@ -52,7 +52,12 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
         holder.score.setText(String.format(Locale.ENGLISH, "%.2f",
                 beaches.get(position).getAverageScore()));
 
-        Date currentTime = Calendar.getInstance().getTime();
+        // gets current hour of day, if there is a warning for that hour, show thumbs down, else up
+        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        if (!beaches.get(position).getBeachesInCounty().get(currentHour).getWarnings().isEmpty())
+            holder.safe.setImageResource(R.drawable.thumb_down);
+        else
+            holder.safe.setImageResource(R.drawable.thumb_up);
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
