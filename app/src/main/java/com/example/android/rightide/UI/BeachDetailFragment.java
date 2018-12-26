@@ -17,7 +17,6 @@ import com.jjoe64.graphview.GraphView;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import Adapters.CountyListBeachAdapter;
 import Adapters.WarningsListBeachDetailAdapter;
 import Models.Beach;
 import Models.County;
@@ -74,15 +73,7 @@ public class BeachDetailFragment extends Fragment {
         String rounded = String.format(Locale.ENGLISH, "%.2f", county.getAverageScore()) + "/10";
         scoreTextView.setText(rounded);
 
-        ArrayList<Beach> warningHours = new ArrayList<>();
-        for (Beach beach : county.getBeachesInCounty()) {
-            if (!beach.getWarnings().isEmpty()) {
-                warningHours.add(beach);
-            }
-        }
-        if (!warningHours.isEmpty()) {
-            loadWarnings(warningHours);
-        }
+        loadWarnings();
 
         averageBeachStatistics();
 
@@ -100,14 +91,22 @@ public class BeachDetailFragment extends Fragment {
 
     }
 
-    private void loadWarnings(ArrayList<Beach> warningHours) {
-        WarningsListBeachDetailAdapter adapter = new WarningsListBeachDetailAdapter();
-        adapter.setWarnings(warningHours);
+    private void loadWarnings() {
+        ArrayList<Beach> warningHours = new ArrayList<>();
+        for (Beach beach : county.getBeachesInCounty()) {
+            if (!beach.getWarnings().isEmpty()) {
+                warningHours.add(beach);
+            }
+        }
+        if (!warningHours.isEmpty()) {
+            WarningsListBeachDetailAdapter adapter = new WarningsListBeachDetailAdapter();
+            adapter.setWarnings(warningHours);
 
-        noWarningsTextView.setVisibility(View.GONE);
-        warningsRecyclerView.setVisibility(View.VISIBLE);
+            noWarningsTextView.setVisibility(View.GONE);
+            warningsRecyclerView.setVisibility(View.VISIBLE);
 
-        warningsRecyclerView.setAdapter(adapter);
+            warningsRecyclerView.setAdapter(adapter);
+        }
     }
 
     private void setUpUI(View root) {

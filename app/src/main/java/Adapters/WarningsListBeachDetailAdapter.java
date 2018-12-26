@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.android.rightide.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Models.Beach;
 
