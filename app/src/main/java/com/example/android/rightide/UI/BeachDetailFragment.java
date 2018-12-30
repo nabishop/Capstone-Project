@@ -116,7 +116,7 @@ public class BeachDetailFragment extends Fragment {
     private void loadBeachImage() {
         Unsplash unsplash = new Unsplash(getResources().getString(R.string.unsplash_auth_key));
 
-        String query = county.getCountyName() + " " + county.getBeachesInCounty().get(0).getBeachName() + " surf";
+        String query = "surf " + county.getBeachesInCounty().get(0).getBeachName() + " " + county.getCountyName();
         unsplash.searchPhotos(query, new Unsplash.OnSearchCompleteListener() {
             @Override
             public void onComplete(SearchResults results) {
