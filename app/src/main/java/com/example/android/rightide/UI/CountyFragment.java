@@ -148,7 +148,7 @@ public class CountyFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        String query = county + " " + countyList.get(0).getBeachesInCounty().get(0).getBeachName();
+        String query = county + " " + countyList.get(0).getBeachesInCounty().get(0).getBeachName() + " surf";
         unsplash.searchPhotos(query, new Unsplash.OnSearchCompleteListener() {
             @Override
             public void onComplete(SearchResults results) {

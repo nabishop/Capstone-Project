@@ -57,4 +57,16 @@ public class CountyWeatherExtras implements Parcelable {
     public ArrayList<Wind> getWindDay() {
         return windDay;
     }
+
+    public void setSwellDay(ArrayList<Swell> swellDay) {
+        this.swellDay = swellDay;
+    }
+
+    public void setTideDay(ArrayList<Tide> tideDay) {
+        this.tideDay = tideDay;
+    }
+
+    public void setWindDay(ArrayList<Wind> windDay) {
+        this.windDay = windDay;
+    }
 }

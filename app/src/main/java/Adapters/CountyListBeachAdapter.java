@@ -70,8 +70,8 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.master_activity_fragment, beachDetailFragment);
-                fragmentTransaction.commit();
                 fragmentTransaction.addToBackStack("Beach_Detail_fragment");
+                fragmentTransaction.commit();
             }
         });
     }
