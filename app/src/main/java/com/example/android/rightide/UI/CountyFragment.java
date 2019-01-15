@@ -269,7 +269,8 @@ public class CountyFragment extends Fragment {
                 countyListBeachAdapter.setBeachesAndContext(counties, getFragmentManager());
 
                 recyclerView.setAdapter(countyListBeachAdapter);
-                getActivity().setTitle("RighTide - " + countyList.get(0).getCountyName());
+                if (countyList != null && getActivity() != null)
+                    getActivity().setTitle("RighTide - " + countyList.get(0).getCountyName());
                 Log.d("CountyFragment", "County Retrieval Success!! Counties is " + counties.toString());
             } else {
                 Toast.makeText(getContext(), "Sorry! No beaches were found in your county!", Toast.LENGTH_LONG).show();
