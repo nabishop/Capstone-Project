@@ -25,6 +25,7 @@ public class MasterActivity extends AppCompatActivity {
     public static final int REQUEST_LOCATION = 1000;
     private static final String PERMISSION_ACCEPTED_MESSAGE = "Thanks for Making The App Easier to Use!";
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +35,24 @@ public class MasterActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         mOnNavigationItemSelectedListener = createNavigationBar(this);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        menu = navigation.getMenu();
 
-        // check location permission
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        if (savedInstanceState == null) {
+            // check location permission
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
-        // if there are any favorite beaches, show favorite page first, else launch county page
-        Menu menu = navigation.getMenu();
-
-        ArrayList<Integer> currentFavoritedBeaches = CursorHelper.getFavoritedBeacheIds(this);
-        if (currentFavoritedBeaches != null) {
-            MenuItem menuItem = menu.getItem(getResources().getInteger(R.integer.favorites_position));
-            menuItem.setChecked(true);
-            setUpFavoritesFragment(currentFavoritedBeaches);
-        } else {
-            MenuItem menuItem = menu.getItem(getResources().getInteger(R.integer.county_position));
-            menuItem.setChecked(true);
-            setUpCountyFragment();
+            // if there are any favorite beaches, show favorite page first, else launch county page
+            ArrayList<Integer> currentFavoritedBeaches = CursorHelper.getFavoritedBeacheIds(this);
+            if (currentFavoritedBeaches != null) {
+                MenuItem menuItem = menu.getItem(getResources().getInteger(R.integer.favorites_position));
+                menuItem.setChecked(true);
+                setUpFavoritesFragment(currentFavoritedBeaches);
+            } else {
+                MenuItem menuItem = menu.getItem(getResources().getInteger(R.integer.county_position));
+                menuItem.setChecked(true);
+                setUpCountyFragment();
+            }
         }
     }
 
@@ -116,5 +118,10 @@ public class MasterActivity extends AppCompatActivity {
         if (getSupportFragmentManager().findFragmentByTag(ActiveFragmentTags.TAG_SETTINGS_FRAGMENT) == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.master_activity_fragment, new SettingsFragment(), null).commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

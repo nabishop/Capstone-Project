@@ -73,10 +73,13 @@ public class BeachDetailFragment extends Fragment {
         county = bundle.getParcelable(CountyFragment.SAVED_BEACHES_STATE);
         beachName = county.getBeachesInCounty().get(0).getBeachName();
 
-        getActivity().setTitle(getActivity().getTitle() + " - " + beachName);
+        if (savedInstanceState == null) {
 
-        // load extras in background while loading other UI first
-        new WeatherExtrasASyncTask().execute(county.getCountyName());
+            getActivity().setTitle(getActivity().getTitle() + " - " + beachName);
+
+            // load extras in background while loading other UI first
+            new WeatherExtrasASyncTask().execute(county.getCountyName());
+        }
         setUpUI(root);
         loadUI();
 

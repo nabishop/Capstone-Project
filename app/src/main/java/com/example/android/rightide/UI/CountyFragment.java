@@ -124,14 +124,12 @@ public class CountyFragment extends Fragment {
 
         Log.d("Restoring CountyFrag", "Saved instance is " + savedInstanceState);
         if (savedInstanceState != null) {
+            progressBar.setVisibility(View.INVISIBLE);
             countyList = savedInstanceState.getParcelableArrayList(SAVED_BEACHES_INSTANCE_KEY);
+            county = countyList.get(0).getCountyName();
             Log.d("Restoring CountyFrag", "countylist is " + countyList);
-            if (countyList != null)
-                loadUI(root);
-            else
-                getDeviceCurrentLocation();
-        } else
-            getDeviceCurrentLocation();
+            loadUI(root);
+        } else getDeviceCurrentLocation();
 
         if (countyList != null)
             getActivity().setTitle("RighTide - " + countyList.get(0).getCountyName());
