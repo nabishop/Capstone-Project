@@ -28,7 +28,6 @@ public class Connection {
                     System.out.println("CONNECTION WORKED");
                     inputStream = urlConnection.getInputStream();
                     jsonResponse = readStream(inputStream);
-                    System.out.println("JSON IN CONNECTION: " + jsonResponse);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -41,7 +40,6 @@ public class Connection {
                     urlConnection.disconnect();
                 }
             }
-            System.out.println("JSON RESPONSE: " + jsonResponse);
             return jsonResponse;
         } catch (Exception e) {
             e.printStackTrace();
