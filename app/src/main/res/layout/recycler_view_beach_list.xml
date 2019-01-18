@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="120dp"
+    android:background="@color/colorOffWhite">
 
     <TextView
         android:id="@+id/recycler_view_beach_list_beach_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@android:color/black"
@@ -23,8 +24,8 @@
         android:id="@+id/recycler_view_beach_list_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="36sp"
@@ -42,7 +43,7 @@
         android:layout_marginTop="6dp"
         android:text="Wave Size"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        app:layout_constraintEnd_toStartOf="@id/recycler_view_beach_list_beach_temp"
+        app:layout_constraintEnd_toStartOf="@id/recycler_view_beach_list_beach_temp_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_view_beach_list_beach_name" />
 
@@ -57,7 +58,7 @@
         tools:text="4.3 ft" />
 
     <TextView
-        android:id="@+id/recycler_view_beach_list_beach_temp"
+        android:id="@+id/recycler_view_beach_list_beach_temp_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -69,14 +70,34 @@
         app:layout_constraintTop_toTopOf="@+id/recycler_view_beach_list_wave_size_tv" />
 
     <TextView
+        android:id="@+id/recycler_view_beach_list_beach_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_view_beach_list_beach_temp_tv"
+        app:layout_constraintStart_toStartOf="@+id/recycler_view_beach_list_beach_temp_tv"
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_beach_list_beach_wave_size_number"
+        tools:text="54 f" />
+
+    <TextView
         android:id="@+id/recycler_view_beach_list_beach_warnings_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Warnings"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recycler_view_beach_list_beach_temp"
+        app:layout_constraintStart_toEndOf="@+id/recycler_view_beach_list_beach_temp_tv"
         app:layout_constraintTop_toTopOf="@+id/recycler_view_beach_list_wave_size_tv" />
+
+    <TextView
+        android:id="@+id/recycler_view_beach_list_beach_warnings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_view_beach_list_beach_warnings_tv"
+        app:layout_constraintStart_toStartOf="@+id/recycler_view_beach_list_beach_warnings_tv"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_beach_list_beach_warnings_tv"
+        tools:text="7 Warnings" />
 
 
 </android.support.constraint.ConstraintLayout>
