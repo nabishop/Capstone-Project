@@ -76,10 +76,10 @@ public class CountyLoader {
                 ArrayList<Beach> beaches = newCounty.getBeachesInCounty();
                 int inner = 0;
                 for (inner = 0; inner < beaches.size(); inner++) {
-                    Log.d("Parse Resoibse", "Temp score is INNER " + beaches.get(inner).getScore());
+                    //Log.d("Parse Resoibse", "Temp score is INNER " + beaches.get(inner).getScore());
                     tempScore += beaches.get(inner).getScore();
                 }
-                Log.d("Parse Resoibse", "Temp score is " + tempScore + " inner is " + inner);
+                //Log.d("Parse Resoibse", "Temp score is " + tempScore + " inner is " + inner);
                 newCounty.setAverageScore(tempScore / beaches.size());
                 countyList.add(newCounty);
             }
@@ -107,8 +107,8 @@ public class CountyLoader {
 
                 results.add(tempObject.getDouble(JSONParsing.TEMP_FARH_KEY));
                 results.add(tempObject.getString(JSONParsing.WETSUIT_KEY));
-                Log.e("getTempNWetSuit", "added temp " + tempObject.getDouble(JSONParsing.TEMP_FARH_KEY));
-                Log.e("getTempNWetSuit", "added suit " + tempObject.getString(JSONParsing.WETSUIT_KEY));
+                //Log.e("getTempNWetSuit", "added temp " + tempObject.getDouble(JSONParsing.TEMP_FARH_KEY));
+                //Log.e("getTempNWetSuit", "added suit " + tempObject.getString(JSONParsing.WETSUIT_KEY));
                 return results;
             }
         }

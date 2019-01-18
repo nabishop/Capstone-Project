@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.rightide.R;
@@ -37,6 +38,8 @@ public class ExploreFragment extends Fragment {
     private List<CountyAutoTextViewItem> autoTextViewItems;
     private static List<County> beachesInCounty;
     private static String clickedCounty;
+
+    private static ProgressBar progressBar;
     private static FragmentManager fragmentManager;
     private static View view;
     private static Context context;
@@ -66,6 +69,8 @@ public class ExploreFragment extends Fragment {
 
         if (savedInstanceState == null) {
             fillCountyList();
+            progressBar = root.findViewById(R.id.explore_fragment_progress_bar);
+            progressBar.setVisibility(View.INVISIBLE);
             setUpAutoCompleteTextView(root);
         } else {
             clickedCounty = savedInstanceState.getString(SAVE_CLICKED_COUNTY);
@@ -88,6 +93,7 @@ public class ExploreFragment extends Fragment {
         CountyListBeachAdapter countyListBeachAdapter = new CountyListBeachAdapter();
         countyListBeachAdapter.setBeachesAndContext(beachesInCounty, fragmentManager);
 
+        progressBar.setVisibility(View.INVISIBLE);
         recyclerView.setAdapter(countyListBeachAdapter);
     }
 
@@ -100,6 +106,7 @@ public class ExploreFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 CountyAutoTextViewItem clickedItem = (CountyAutoTextViewItem) adapterView.getItemAtPosition(i);
                 clickedCounty = clickedItem.getCountyName();
+                progressBar.setVisibility(View.VISIBLE);
                 Log.d("ExploreFrag", "Selected " + clickedCounty);
 
                 new ExploreFragment.CountyLoader().execute(clickedCounty);
