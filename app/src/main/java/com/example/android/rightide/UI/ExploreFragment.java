@@ -1,24 +1,34 @@
 package com.example.android.rightide.UI;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
 import com.example.android.rightide.R;
+import com.kc.unsplash.Unsplash;
+import com.kc.unsplash.models.Photo;
+import com.kc.unsplash.models.SearchResults;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.AutoCompleteCountyAdapter;
+import Adapters.CountyListBeachAdapter;
 import Models.County;
 import Models.CountyAutoTextViewItem;
 import Utils.CountyLoader;
@@ -27,6 +37,9 @@ public class ExploreFragment extends Fragment {
     private List<CountyAutoTextViewItem> autoTextViewItems;
     private static List<County> beachesInCounty;
     private static String clickedCounty;
+    private static FragmentManager fragmentManager;
+    private static View view;
+    private static Context context;
 
     private final String SAVE_AUTO_LIST = "saved_auto_text_view_list";
     private final String SAVE_CLICKED_COUNTY = "saved_clicked_county";
@@ -48,6 +61,8 @@ public class ExploreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.explore_fragment, container, false);
+        view = root;
+        fragmentManager = getFragmentManager();
 
         if (savedInstanceState == null) {
             fillCountyList();
@@ -64,9 +79,19 @@ public class ExploreFragment extends Fragment {
     private static void loadUI() {
         Log.d("ExploreFrag", "clickedCounty is " + clickedCounty);
         Log.d("ExploreFrag", "beaches is " + beachesInCounty);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        RecyclerView recyclerView = view.findViewById(R.id.explore_fragment_county_rv);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        CountyListBeachAdapter countyListBeachAdapter = new CountyListBeachAdapter();
+        countyListBeachAdapter.setBeachesAndContext(beachesInCounty, fragmentManager);
+
+        recyclerView.setAdapter(countyListBeachAdapter);
     }
 
-    private void setUpAutoCompleteTextView(View root) {
+    private void setUpAutoCompleteTextView(final View root) {
         AutoCompleteTextView editText = root.findViewById(R.id.explore_fragment_autocomplete_tv);
         AutoCompleteCountyAdapter autoCompleteCountyAdapter = new AutoCompleteCountyAdapter(getContext(), autoTextViewItems);
 
@@ -99,7 +124,6 @@ public class ExploreFragment extends Fragment {
     }
 
     private static class CountyLoader extends AsyncTask<String, Void, List<County>> {
-
         @Override
         protected List<County> doInBackground(String... strings) {
             if (strings == null || strings.length < 1 || strings[0] == null)

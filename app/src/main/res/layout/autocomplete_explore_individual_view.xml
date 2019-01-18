@@ -10,7 +10,7 @@
         android:id="@+id/autocomplete_view_county_image"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:scaleType="fitXY" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/autocomplete_view_county_text"
