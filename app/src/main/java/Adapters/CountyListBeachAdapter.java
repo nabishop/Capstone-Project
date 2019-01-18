@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -42,22 +43,40 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
     @Override
     public BeachAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.county_list_individual_view, parent, false);
+        View view = inflater.inflate(R.layout.recycler_view_beach_list, parent, false);
         return new BeachAdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BeachAdapterViewHolder holder, final int position) {
         holder.beachName.setText(beaches.get(position).getBeachesInCounty().get(0).getBeachName());
-        holder.score.setText(String.format(Locale.ENGLISH, "%.2f",
-                beaches.get(position).getAverageScore()));
+
+        double average = 0;
+        ArrayList<Beach> avgBeaches = beaches.get(position).getBeachesInCounty();
+        for (int x = 0; x < avgBeaches.size(); x++) {
+            average += avgBeaches.get(position).getWaveSizeFt();
+        }
+
+        average = average / avgBeaches.size();
+
+        holder.waveHeight.setText(String.format("%s ft",
+                String.format(Locale.US, "%.2f", average)));
+
+        holder.score.setText(String.format("%s/10", String.format(Locale.US, "%.2f",
+                beaches.get(position).getAverageScore())));
+
+        holder.temperature.setText(String.format("%s f",
+                String.format(Locale.US, "%.2f",
+                        beaches.get(position).getTemperatureFahrenheit())));
 
         // gets current hour of day, if there is a warning for that hour, show thumbs down, else up
         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        if (!beaches.get(position).getBeachesInCounty().get(currentHour).getWarnings().isEmpty())
-            holder.safe.setImageResource(R.drawable.thumb_down);
-        else
-            holder.safe.setImageResource(R.drawable.thumb_up);
+        if (beaches.get(position).getBeachesInCounty().get(currentHour).getWarnings().isEmpty()) {
+            holder.warnings.setText("No Warnings this Hour");
+        } else {
+            holder.warnings.setText(String.format(Locale.US, "%d Warnings this Hour",
+                    beaches.get(position).getBeachesInCounty().get(currentHour).getWarnings().size()));
+        }
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,16 +104,20 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
 
     public class BeachAdapterViewHolder extends RecyclerView.ViewHolder {
         TextView beachName;
+        TextView waveHeight;
         TextView score;
-        ImageView safe;
-        LinearLayout parentLayout;
+        TextView warnings;
+        TextView temperature;
+        ConstraintLayout parentLayout;
 
         public BeachAdapterViewHolder(View itemView) {
             super(itemView);
-            beachName = itemView.findViewById(R.id.county_list_individual_beach);
-            score = itemView.findViewById(R.id.county_list_individual_score);
-            safe = itemView.findViewById(R.id.county_list_individual_safetosurf);
-            parentLayout = itemView.findViewById(R.id.county_list_parent_view);
+            beachName = itemView.findViewById(R.id.recycler_view_beach_list_beach_name);
+            waveHeight = itemView.findViewById(R.id.recycler_view_beach_list_beach_wave_size_number);
+            score = itemView.findViewById(R.id.recycler_view_beach_list_score);
+            warnings = itemView.findViewById(R.id.recycler_view_beach_list_beach_warnings);
+            temperature = itemView.findViewById(R.id.recycler_view_beach_list_beach_temp);
+            parentLayout = itemView.findViewById(R.id.recycler_view_beach_list_parent_layout);
         }
     }
 }

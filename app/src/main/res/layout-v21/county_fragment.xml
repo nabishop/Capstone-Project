@@ -41,8 +41,9 @@
                     android:id="@+id/county_fragment_county_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_weight=".05"
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
                     android:textSize="32sp"
                     tools:text="San luis Obispo, CA" />
             </LinearLayout>
@@ -56,14 +57,15 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/county_fragment_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="6dp"
-                android:paddingLeft="6dp"
-                android:paddingEnd="6dp"
-                android:paddingRight="6dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/county_fragment_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:paddingStart="6dp"
+            android:paddingLeft="6dp"
+            android:paddingEnd="6dp"
+            android:paddingRight="6dp" />
 
     </android.support.v4.widget.NestedScrollView>
 

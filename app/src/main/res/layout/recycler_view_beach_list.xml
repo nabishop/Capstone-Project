@@ -2,9 +2,11 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recycler_view_beach_list_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:background="@color/colorOffWhite">
+    android:background="@color/colorOffWhite"
+    android:elevation="4dp">
 
     <TextView
         android:id="@+id/recycler_view_beach_list_beach_name"
@@ -98,6 +100,12 @@
         app:layout_constraintStart_toStartOf="@+id/recycler_view_beach_list_beach_warnings_tv"
         app:layout_constraintTop_toBottomOf="@+id/recycler_view_beach_list_beach_warnings_tv"
         tools:text="7 Warnings" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBlack"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
