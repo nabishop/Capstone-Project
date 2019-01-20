@@ -128,8 +128,14 @@ public class CountyLoader {
             beachArrayList = BeachLoader.getBeach(spotName, spot_id);
 
             ArrayList results = getTempNWetSuit(countyName);
-            County county = new County(countyName, beachArrayList,
-                    (double) results.get(0), (String) results.get(1));
+
+            County county;
+            if (results == null) {
+                county = new County(countyName, beachArrayList, 0, "No Data Available");
+            } else {
+                county = new County(countyName, beachArrayList,
+                        (double) results.get(0), (String) results.get(1));
+            }
             return county;
 
         } catch (Exception e) {

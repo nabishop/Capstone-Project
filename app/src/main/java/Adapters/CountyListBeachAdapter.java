@@ -65,9 +65,13 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
         holder.score.setText(String.format("%s/10", String.format(Locale.US, "%.2f",
                 beaches.get(position).getAverageScore())));
 
-        holder.temperature.setText(String.format("%s f",
-                String.format(Locale.US, "%.2f",
-                        beaches.get(position).getTemperatureFahrenheit())));
+        if (beaches.get(position).getTemperatureFahrenheit() == 0) {
+            holder.temperature.setText("Not Available");
+        } else {
+            holder.temperature.setText(String.format("%s f",
+                    String.format(Locale.US, "%.2f",
+                            beaches.get(position).getTemperatureFahrenheit())));
+        }
 
         // gets current hour of day, if there is a warning for that hour, show thumbs down, else up
         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);

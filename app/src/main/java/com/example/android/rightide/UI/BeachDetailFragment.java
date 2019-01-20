@@ -104,10 +104,10 @@ public class BeachDetailFragment extends Fragment {
         waveHeightTextView.setText(String.format("%s'", String.format(Locale.ENGLISH,
                 "%.2f", county.getAverageWaveHeight())));
 
-        tideTextView.setText(String.format("%s/4", String.format(Locale.ENGLISH,
+        tideTextView.setText(String.format("%s/5", String.format(Locale.ENGLISH,
                 "%.2f", county.getAverageTideScore())));
 
-        windTextView.setText(String.format("%s/4", String.format(Locale.ENGLISH,
+        windTextView.setText(String.format("%s/5", String.format(Locale.ENGLISH,
                 "%.2f", county.getAverageWindScore())));
 
         temperatureTextView.setText(

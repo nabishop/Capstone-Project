@@ -26,6 +26,7 @@ import com.kc.unsplash.models.SearchResults;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import Adapters.AutoCompleteCountyAdapter;
@@ -144,6 +145,7 @@ public class ExploreFragment extends Fragment {
         protected void onPostExecute(List<County> counties) {
             super.onPostExecute(counties);
             beachesInCounty = new ArrayList<>(counties);
+            Collections.sort(beachesInCounty);
 
             Log.d("ExploreFrag", "County is " + beachesInCounty);
             loadUI();

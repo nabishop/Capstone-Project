@@ -266,7 +266,8 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/waves"
                     app:layout_constraintEnd_toEndOf="@+id/beach_detail_fragment_tide_tv"
-                    app:layout_constraintStart_toStartOf="@+id/beach_detail_fragment_tide_tv" />
+                    app:layout_constraintStart_toStartOf="@+id/beach_detail_fragment_tide_tv"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/beach_detail_fragment_tide_tv"
