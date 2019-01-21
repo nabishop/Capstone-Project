@@ -9,6 +9,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,9 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
 
         double average = 0;
         ArrayList<Beach> avgBeaches = beaches.get(position).getBeachesInCounty();
-        for (int x = 0; x < avgBeaches.size(); x++) {
-            average += avgBeaches.get(position).getWaveSizeFt();
+        Log.d("BIND", String.valueOf(position));
+        for (Beach beach : avgBeaches) {
+            average += beach.getWaveSizeFt();
         }
 
         average = average / avgBeaches.size();

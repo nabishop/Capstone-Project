@@ -14,7 +14,7 @@ public class Contract {
 
         public static final String TABLE_NAME = "beachTable";
         public static final String COLUMN_BEACH_NAME = "beachName";
-        public static String COLUMN_BEACH_ID = "beachId";
+        public static final String COLUMN_BEACH_ID = "beachId";
         public static final String COLUMN_BEACH_COUNTY = "beachCounty";
     }
 }

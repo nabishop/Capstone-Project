@@ -15,7 +15,7 @@ public class CursorHelper {
 
         Cursor cursor = context.getContentResolver().query(Contract.BeachEntry.CONTENT_URI,
                 columnsToRetrieve, null, null, null);
-        if(cursor == null)
+        if (cursor == null)
             return null;
 
         if (cursor.moveToFirst()) {
@@ -26,8 +26,12 @@ public class CursorHelper {
                 spotId = cursor.getInt(cursor.getColumnIndex(Contract.BeachEntry.COLUMN_BEACH_ID));
                 beachList.add(spotId);
             }
+
+            cursor.close();
             return beachList;
         } else {
+
+            cursor.close();
             return null;
         }
     }

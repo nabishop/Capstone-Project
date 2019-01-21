@@ -12,7 +12,7 @@ import static ContentProvider.Contract.BeachEntry.COLUMN_BEACH_COUNTY;
 import static android.provider.BaseColumns._ID;
 
 public class DbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "beachList.db";
 
     public DbHelper(Context context) {
@@ -24,7 +24,7 @@ public class DbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME
                 + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_BEACH_NAME + " TEXT NOT NULL, " + COLUMN_BEACH_ID + " TEXT , "
-                + COLUMN_BEACH_COUNTY+ ");";
+                + COLUMN_BEACH_COUNTY + " TEXT NOT NULL "+");";
         db.execSQL(SQL_CREATE_MOVIE_TABLE);
     }
 

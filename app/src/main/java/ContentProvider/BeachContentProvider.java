@@ -44,7 +44,6 @@ public class BeachContentProvider extends ContentProvider {
             return false;
 
         cursor.close();
-        db.close();
         return true;
     }
 
@@ -73,7 +72,6 @@ public class BeachContentProvider extends ContentProvider {
         }
 
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
-        db.close();
         return retCursor;
     }
 
@@ -105,7 +103,6 @@ public class BeachContentProvider extends ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
-        db.close();
         return returnUri;
     }
 
@@ -134,7 +131,6 @@ public class BeachContentProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
-        db.close();
         return retInt;
     }
 
@@ -157,7 +153,6 @@ public class BeachContentProvider extends ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
-        db.close();
         return retInt;
     }
 }

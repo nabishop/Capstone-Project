@@ -68,8 +68,6 @@ public class BeachDetailFragment extends Fragment {
     LinearLayoutManager warningsLinearLayoutManager;
     RecyclerView warningsRecyclerView;
 
-    DbHelper dbHelper;
-
     public BeachDetailFragment() {
     }
 
@@ -77,7 +75,6 @@ public class BeachDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.beach_detail_fragment, container, false);
-        dbHelper = new DbHelper(getContext());
 
         Bundle bundle = this.getArguments();
         if (bundle == null)
@@ -97,27 +94,6 @@ public class BeachDetailFragment extends Fragment {
         loadUI();
 
         return root;
-    }
-
-    private void onClickAddFavorite() {
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(Contract.BeachEntry.COLUMN_BEACH_NAME, beachName);
-        contentValues.put(Contract.BeachEntry.COLUMN_BEACH_COUNTY, county.getCountyName());
-        contentValues.put(Contract.BeachEntry.COLUMN_BEACH_ID, county.getBeachesInCounty().get(0).getSpotId());
-
-        if (!isInDatabase(county.getBeachesInCounty().get(0).getSpotId())) {
-            getActivity().getContentResolver().insert(Contract.BASE_CONTENT_URI, contentValues);
-
-            favoritesTv.setText("Unfavorite");
-            Toast.makeText(getContext(), "Added " + beachName + " to Favorites",
-                    Toast.LENGTH_LONG).show();
-        } else {
-            getActivity().getContentResolver().delete(Contract.BASE_CONTENT_URI, Contract.BeachEntry.COLUMN_BEACH_ID += "=?",
-                    new String[county.getBeachesInCounty().get(0).getSpotId()]);
-
-            favoritesTv.setText("Favorite");
-        }
     }
 
     private boolean isInDatabase(int id) {
@@ -172,6 +148,40 @@ public class BeachDetailFragment extends Fragment {
                 onClickAddFavorite();
             }
         });
+
+        if (isInDatabase(county.getBeachesInCounty().get(0).getSpotId())) {
+            favoritesTv.setText("Unfavorite");
+            favorites.setImageDrawable(getResources().getDrawable(R.drawable.star));
+        } else {
+            favoritesTv.setText("Favorite");
+            favorites.setImageDrawable(getResources().getDrawable(R.drawable.star_outline));
+        }
+    }
+
+    private void onClickAddFavorite() {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(Contract.BeachEntry.COLUMN_BEACH_NAME, beachName);
+        contentValues.put(Contract.BeachEntry.COLUMN_BEACH_COUNTY, county.getCountyName());
+        contentValues.put(Contract.BeachEntry.COLUMN_BEACH_ID, county.getBeachesInCounty().get(0).getSpotId());
+
+        if (!isInDatabase(county.getBeachesInCounty().get(0).getSpotId())) {
+            getActivity().getContentResolver().insert(Contract.BeachEntry.CONTENT_URI, contentValues);
+
+            favoritesTv.setText("Unfavorite");
+            favorites.setImageDrawable(getResources().getDrawable(R.drawable.star));
+            Toast.makeText(getContext(), "Added " + beachName + " to Favorites",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            getActivity().getContentResolver().delete(Contract.BeachEntry.CONTENT_URI, Contract.BeachEntry.COLUMN_BEACH_ID + "=?",
+                    new String[]{String.valueOf(county.getBeachesInCounty().get(0).getSpotId())});
+
+            favoritesTv.setText("Favorite");
+            favorites.setImageDrawable(getResources().getDrawable(R.drawable.star_outline));
+
+            Toast.makeText(getContext(), "Removed " + beachName + " from Favorites",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadBeachImage() {

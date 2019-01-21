@@ -20,17 +20,20 @@ import java.util.ArrayList;
 import ContentProvider.BeachContentProvider;
 import ContentProvider.Contract;
 import ContentProvider.CursorHelper;
+import ContentProvider.DbHelper;
 
 public class MasterActivity extends AppCompatActivity {
     public static final int REQUEST_LOCATION = 1000;
     private static final String PERMISSION_ACCEPTED_MESSAGE = "Thanks for Making The App Easier to Use!";
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
     Menu menu;
+    DbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.master_activity);
+
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         mOnNavigationItemSelectedListener = createNavigationBar(this);
@@ -38,13 +41,14 @@ public class MasterActivity extends AppCompatActivity {
         menu = navigation.getMenu();
 
         if (savedInstanceState == null) {
+            dbHelper = new DbHelper(getApplicationContext());
             // check location permission
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
             // if there are any favorite beaches, show favorite page first, else launch county page
             ArrayList<Integer> currentFavoritedBeaches = CursorHelper.getFavoritedBeacheIds(this);
-            if (currentFavoritedBeaches != null) {
+            if (currentFavoritedBeaches != null && currentFavoritedBeaches.size() > 0) {
                 MenuItem menuItem = menu.getItem(getResources().getInteger(R.integer.favorites_position));
                 menuItem.setChecked(true);
                 setUpFavoritesFragment(currentFavoritedBeaches);
