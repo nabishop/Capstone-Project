@@ -28,6 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="ContentProvider.BeachContentProvider"
+            android:authorities="com.example.android.rightide"
+            android:exported="false" />
     </application>
 
 </manifest>
