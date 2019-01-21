@@ -54,7 +54,6 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
 
         double average = 0;
         ArrayList<Beach> avgBeaches = beaches.get(position).getBeachesInCounty();
-        Log.d("BIND", String.valueOf(position));
         for (Beach beach : avgBeaches) {
             average += beach.getWaveSizeFt();
         }
