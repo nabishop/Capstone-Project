@@ -36,6 +36,8 @@ public class CountyLoader {
         public static final String WETSUIT_KEY = "wetsuit";
     }
 
+    private static ArrayList results;
+
     // public helper function that returns a list of counties.
     // takes in a county name and returns a list of the beaches
     // in that county, using other helper functions to get certain info
@@ -127,7 +129,9 @@ public class CountyLoader {
             ArrayList<Beach> beachArrayList;
             beachArrayList = BeachLoader.getBeach(spotName, spot_id);
 
-            ArrayList results = getTempNWetSuit(countyName);
+            if(results==null){
+                results = getTempNWetSuit(countyName);
+            }
 
             County county;
             if (results == null) {

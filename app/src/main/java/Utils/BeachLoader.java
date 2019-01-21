@@ -91,7 +91,6 @@ public class BeachLoader {
     }
 
     public static int assignScore(String type) {
-        Log.d("JJJJJ", type);
         switch (type) {
             case "Poor":
                 return 1;
