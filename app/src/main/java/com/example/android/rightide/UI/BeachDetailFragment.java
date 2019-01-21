@@ -1,7 +1,9 @@
 package com.example.android.rightide.UI;
 
+import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,6 +30,9 @@ import java.util.List;
 import java.util.Locale;
 
 import Adapters.WarningsListBeachDetailAdapter;
+import ContentProvider.Contract;
+import ContentProvider.CursorHelper;
+import ContentProvider.DbHelper;
 import Models.Beach;
 import Models.County;
 import Models.CountyWeatherExtras;
@@ -51,12 +56,19 @@ public class BeachDetailFragment extends Fragment {
     TextView temperatureTextView;
     TextView noWarningsTextView;
 
+    ImageView favorites;
+    TextView favoritesTv;
+    ImageView maps;
+    ImageView notifications;
+
     static GraphView waveGraphView;
     static GraphView tideGraphView;
     static GraphView windGraphView;
 
     LinearLayoutManager warningsLinearLayoutManager;
     RecyclerView warningsRecyclerView;
+
+    DbHelper dbHelper;
 
     public BeachDetailFragment() {
     }
@@ -65,6 +77,7 @@ public class BeachDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.beach_detail_fragment, container, false);
+        dbHelper = new DbHelper(getContext());
 
         Bundle bundle = this.getArguments();
         if (bundle == null)
@@ -86,8 +99,44 @@ public class BeachDetailFragment extends Fragment {
         return root;
     }
 
+    private void onClickAddFavorite() {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(Contract.BeachEntry.COLUMN_BEACH_NAME, beachName);
+        contentValues.put(Contract.BeachEntry.COLUMN_BEACH_COUNTY, county.getCountyName());
+        contentValues.put(Contract.BeachEntry.COLUMN_BEACH_ID, county.getBeachesInCounty().get(0).getSpotId());
+
+        if (!isInDatabase(county.getBeachesInCounty().get(0).getSpotId())) {
+            getActivity().getContentResolver().insert(Contract.BASE_CONTENT_URI, contentValues);
+
+            favoritesTv.setText("Unfavorite");
+            Toast.makeText(getContext(), "Added " + beachName + " to Favorites",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            getActivity().getContentResolver().delete(Contract.BASE_CONTENT_URI, Contract.BeachEntry.COLUMN_BEACH_ID += "=?",
+                    new String[county.getBeachesInCounty().get(0).getSpotId()]);
+
+            favoritesTv.setText("Favorite");
+        }
+    }
+
+    private boolean isInDatabase(int id) {
+        List<Integer> beachId = CursorHelper.getFavoritedBeacheIds(getContext());
+
+        if (beachId == null) return false;
+
+        for (Integer beachIdIter : beachId) {
+            if (id == beachIdIter) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void loadUI() {
         loadBeachImage();
+
+        loadImageClicks();
 
         beachNameTextView.setText(county.getBeachesInCounty().get(0).getBeachName());
 
@@ -114,6 +163,15 @@ public class BeachDetailFragment extends Fragment {
                 String.format(Locale.ENGLISH, "%.2f", county.getTemperatureFahrenheit()));
 
         loadWaveSizeGraphView();
+    }
+
+    private void loadImageClicks() {
+        favorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickAddFavorite();
+            }
+        });
     }
 
     private void loadBeachImage() {
@@ -187,6 +245,11 @@ public class BeachDetailFragment extends Fragment {
         warningsRecyclerView = root.findViewById(R.id.beach_detail_fragment_warnings_rv);
         warningsRecyclerView.setLayoutManager(warningsLinearLayoutManager);
         warningsRecyclerView.setHasFixedSize(true);
+
+        favorites = root.findViewById(R.id.detail_star_favorite_image);
+        favoritesTv = root.findViewById(R.id.detail_star_favorite_textView);
+        maps = root.findViewById(R.id.detail_map_image);
+        notifications = root.findViewById(R.id.detail_notification_image);
     }
 
     private void averageBeachStatistics() {
