@@ -41,6 +41,8 @@ public class ExploreFragment extends Fragment {
     private static String clickedCounty;
 
     private static ProgressBar progressBar;
+    private static RecyclerView recyclerView;
+    private static CountyListBeachAdapter countyListBeachAdapter;
     private static FragmentManager fragmentManager;
     private static View view;
     private static Context context;
@@ -87,11 +89,11 @@ public class ExploreFragment extends Fragment {
         Log.d("ExploreFrag", "beaches is " + beachesInCounty);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        RecyclerView recyclerView = view.findViewById(R.id.explore_fragment_county_rv);
+        recyclerView = view.findViewById(R.id.explore_fragment_county_rv);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        CountyListBeachAdapter countyListBeachAdapter = new CountyListBeachAdapter();
+        countyListBeachAdapter = new CountyListBeachAdapter();
         countyListBeachAdapter.setBeachesAndContext(beachesInCounty, fragmentManager);
 
         progressBar.setVisibility(View.INVISIBLE);
@@ -105,6 +107,10 @@ public class ExploreFragment extends Fragment {
         editText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(recyclerView!=null){
+                    recyclerView.setAdapter(null);
+                }
+
                 CountyAutoTextViewItem clickedItem = (CountyAutoTextViewItem) adapterView.getItemAtPosition(i);
                 clickedCounty = clickedItem.getCountyName();
                 progressBar.setVisibility(View.VISIBLE);
@@ -120,7 +126,7 @@ public class ExploreFragment extends Fragment {
     private void fillCountyList() {
         autoTextViewItems = new ArrayList<>();
         autoTextViewItems.add(new CountyAutoTextViewItem("Marin", R.drawable.marin));
-        autoTextViewItems.add(new CountyAutoTextViewItem("San Fransisco", R.drawable.san_fransisco));
+        autoTextViewItems.add(new CountyAutoTextViewItem("San Francisco", R.drawable.san_fransisco));
         autoTextViewItems.add(new CountyAutoTextViewItem("San Mateo", R.drawable.san_mateo));
         autoTextViewItems.add(new CountyAutoTextViewItem("Santa Cruz", R.drawable.santa_cruz));
         autoTextViewItems.add(new CountyAutoTextViewItem("Monterey", R.drawable.monterey));
