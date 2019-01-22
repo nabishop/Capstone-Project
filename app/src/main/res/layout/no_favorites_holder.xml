@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/no_favorites_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/favorites_fragment_no_favorites_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/beach"
+        app:layout_constraintBottom_toTopOf="@+id/favorites_fragment_no_favorites_header"
+        app:layout_constraintEnd_toEndOf="@+id/favorites_fragment_no_favorites_header"
+        app:layout_constraintStart_toStartOf="@+id/favorites_fragment_no_favorites_header" />
+
+    <TextView
+        android:id="@+id/favorites_fragment_no_favorites_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:padding="4dp"
+        android:text="Heck! No Favorites Here!"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/favorites_fragment_no_favorites_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The Right Beach is Surely out There!"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        app:layout_constraintEnd_toEndOf="@+id/favorites_fragment_no_favorites_header"
+        app:layout_constraintStart_toStartOf="@+id/favorites_fragment_no_favorites_header"
+        app:layout_constraintTop_toBottomOf="@+id/favorites_fragment_no_favorites_header" />
+
+    <TextView
+        android:id="@+id/favorites_fragment_no_favorites_third"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time to Get Exploring!"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        app:layout_constraintEnd_toEndOf="@+id/favorites_fragment_no_favorites_second"
+        app:layout_constraintStart_toStartOf="@+id/favorites_fragment_no_favorites_second"
+        app:layout_constraintTop_toBottomOf="@+id/favorites_fragment_no_favorites_second" />
+
+</android.support.constraint.ConstraintLayout>

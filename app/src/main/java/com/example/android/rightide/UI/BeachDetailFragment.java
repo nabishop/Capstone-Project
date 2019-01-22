@@ -84,9 +84,6 @@ public class BeachDetailFragment extends Fragment {
         beachName = county.getBeachesInCounty().get(0).getBeachName();
 
         if (savedInstanceState == null) {
-
-            getActivity().setTitle(getActivity().getTitle() + " - " + beachName);
-
             // load extras in background while loading other UI first
             new WeatherExtrasASyncTask().execute(county.getCountyName());
         }

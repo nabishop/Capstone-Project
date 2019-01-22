@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -122,12 +123,9 @@ public class CountyFragment extends Fragment {
             county = countyList.get(0).getCountyName();
             Log.d("Restoring CountyFrag", "countylist is " + countyList);
             loadUI(root);
-        } else getDeviceCurrentLocation();
-
-        if (countyList != null)
-            getActivity().setTitle("RighTide - " + countyList.get(0).getCountyName());
-        else
-            getActivity().setTitle("RighTide");
+        } else {
+            getDeviceCurrentLocation();
+        }
 
         return root;
     }
@@ -262,8 +260,7 @@ public class CountyFragment extends Fragment {
                 countyListBeachAdapter.setBeachesAndContext(counties, getFragmentManager());
 
                 recyclerView.setAdapter(countyListBeachAdapter);
-                if (countyList != null && getActivity() != null)
-                    getActivity().setTitle("RighTide - " + countyList.get(0).getCountyName());
+
                 Log.d("CountyFragment", "County Retrieval Success!! Counties is " + counties.toString());
             } else {
                 Toast.makeText(getContext(), "Sorry! No beaches were found in your county!", Toast.LENGTH_LONG).show();
