@@ -107,7 +107,7 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
         return beaches.size();
     }
 
-    public class BeachAdapterViewHolder extends RecyclerView.ViewHolder {
+    class BeachAdapterViewHolder extends RecyclerView.ViewHolder {
         TextView beachName;
         TextView waveHeight;
         TextView score;
@@ -115,7 +115,7 @@ public class CountyListBeachAdapter extends RecyclerView.Adapter<CountyListBeach
         TextView temperature;
         ConstraintLayout parentLayout;
 
-        public BeachAdapterViewHolder(View itemView) {
+        BeachAdapterViewHolder(View itemView) {
             super(itemView);
             beachName = itemView.findViewById(R.id.recycler_view_beach_list_beach_name);
             waveHeight = itemView.findViewById(R.id.recycler_view_beach_list_beach_wave_size_number);

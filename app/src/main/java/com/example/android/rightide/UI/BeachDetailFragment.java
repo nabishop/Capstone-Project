@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.kc.unsplash.models.Photo;
 import com.kc.unsplash.models.SearchResults;
 import com.squareup.picasso.Picasso;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -200,12 +202,18 @@ public class BeachDetailFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void loadWaveSizeGraphView() {
         LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>();
+        waveGraphView.getViewport().setXAxisBoundsManual(true);
+        waveGraphView.getViewport().setMaxX(county.getBeachesInCounty().size() - 1);
 
+        waveGraphView.getGridLabelRenderer().setPadding(4);
+        waveGraphView.getGridLabelRenderer().setVerticalAxisTitle("Wave Size (Feet)");
+        waveGraphView.getGridLabelRenderer().setHorizontalAxisTitle("Time Today (Hour)");
+
+        Log.d("BeachDetailFragment", "Size is " + county.getBeachesInCounty().size());
         for (int x = 0; x < county.getBeachesInCounty().size(); x++) {
             lineGraphSeries.appendData(new DataPoint(x, county.getBeachesInCounty().get(x).getWaveSizeFt()),
                     true, county.getBeachesInCounty().size());
@@ -297,6 +305,12 @@ public class BeachDetailFragment extends Fragment {
 
         private void loadTideGraph(ArrayList<Tide> tides) {
             LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>();
+            tideGraphView.getViewport().setXAxisBoundsManual(true);
+            tideGraphView.getViewport().setMaxX(tides.size() - 1);
+
+            tideGraphView.getGridLabelRenderer().setPadding(4);
+            tideGraphView.getGridLabelRenderer().setVerticalAxisTitle("Tide Size (Feet)");
+            tideGraphView.getGridLabelRenderer().setHorizontalAxisTitle("Time Today (Hour)");
 
             for (int x = 0; x < tides.size(); x++) {
                 lineGraphSeries.appendData(new DataPoint(x, tides.get(x).getTideFeet()),
@@ -314,6 +328,12 @@ public class BeachDetailFragment extends Fragment {
 
         private void loadWindGraph(ArrayList<Wind> winds) {
             LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>();
+            windGraphView.getViewport().setXAxisBoundsManual(true);
+            windGraphView.getViewport().setMaxX(winds.size() - 1);
+
+            windGraphView.getGridLabelRenderer().setPadding(4);
+            windGraphView.getGridLabelRenderer().setVerticalAxisTitle("Wind Speed (Mph)");
+            windGraphView.getGridLabelRenderer().setHorizontalAxisTitle("Time today (hour)");
 
             for (int x = 0; x < winds.size(); x++) {
                 lineGraphSeries.appendData(new DataPoint(x, winds.get(x).getWindSpeedMph()),

@@ -57,7 +57,6 @@ public class BeachContentProvider extends ContentProvider {
         Cursor retCursor;
 
         switch (match) {
-
             case BEACH:
                 retCursor = db.query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;

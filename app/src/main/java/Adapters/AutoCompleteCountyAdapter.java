@@ -19,7 +19,7 @@ import java.util.List;
 import Models.CountyAutoTextViewItem;
 
 public class AutoCompleteCountyAdapter extends ArrayAdapter<CountyAutoTextViewItem> {
-    List<CountyAutoTextViewItem> autoTextViewItems;
+    private List<CountyAutoTextViewItem> autoTextViewItems;
 
     public AutoCompleteCountyAdapter(@NonNull Context context, @NonNull List<CountyAutoTextViewItem> objects) {
         super(context, 0, objects);

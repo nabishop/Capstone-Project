@@ -101,13 +101,13 @@ public class ExploreFragment extends Fragment {
     }
 
     private void setUpAutoCompleteTextView(final View root) {
-        AutoCompleteTextView editText = root.findViewById(R.id.explore_fragment_autocomplete_tv);
+        final AutoCompleteTextView editText = root.findViewById(R.id.explore_fragment_autocomplete_tv);
         AutoCompleteCountyAdapter autoCompleteCountyAdapter = new AutoCompleteCountyAdapter(getContext(), autoTextViewItems);
 
         editText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(recyclerView!=null){
+                if (recyclerView != null) {
                     recyclerView.setAdapter(null);
                 }
 
@@ -116,6 +116,7 @@ public class ExploreFragment extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
                 Log.d("ExploreFrag", "Selected " + clickedCounty);
 
+                editText.setText("");
                 new ExploreFragment.CountyLoader().execute(clickedCounty);
             }
         });

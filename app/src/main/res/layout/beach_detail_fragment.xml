@@ -385,7 +385,8 @@
             android:id="@+id/beach_detail_fragment_wave_graph"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:paddingTop="4dp" />
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -399,7 +400,8 @@
             android:id="@+id/beach_detail_fragment_tide_graph"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:padding="4dp" />
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -413,6 +415,7 @@
             android:id="@+id/beach_detail_fragment_wind_graph"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:padding="4dp" />
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp" />
     </LinearLayout>
 </ScrollView>

@@ -47,11 +47,11 @@ public class WarningsListBeachDetailAdapter extends RecyclerView.Adapter<Warning
         return warnings.size();
     }
 
-    public class WarningAdapterViewHolder extends RecyclerView.ViewHolder {
+    class WarningAdapterViewHolder extends RecyclerView.ViewHolder {
         TextView time;
         TextView warning;
 
-        public WarningAdapterViewHolder(@NonNull View itemView) {
+        WarningAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
 
             time = itemView.findViewById(R.id.warnings_list_individual_view_time);
