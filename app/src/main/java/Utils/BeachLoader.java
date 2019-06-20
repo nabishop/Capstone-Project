@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import Models.Beach;
 
@@ -22,6 +23,7 @@ public class BeachLoader {
         public static final String DATE = "date";
         public static final String DAY = "day";
         public static final String HOUR = "hour";
+        public static final String NAME = "spot_name";
         public static final String SCORE_DETAIL = "shape_detail";
         public static final String SCORE_SWELL = "swell";
         public static final String SCORE_TIDE = "tide";
@@ -30,9 +32,19 @@ public class BeachLoader {
         public static final String WARNINGS = "warnings";
     }
 
+    public static ArrayList<ArrayList<Beach>> getFavoritedBeachInfo(Integer[] ids) {
+        ArrayList<ArrayList<Beach>> beaches = new ArrayList<>();
+
+        for (int id : ids) {
+            beaches.add(getBeach(id));
+        }
+
+        return beaches;
+    }
+
     // gets beach stats for the day, general overview
     // assumes both parameters are non-null
-    public static ArrayList<Beach> getBeach(String beachName, int beachId) {
+    public static ArrayList<Beach> getBeach(int beachId) {
         URL request = getBeachUrl(beachId);
 
         if (request != null) {
@@ -41,7 +53,7 @@ public class BeachLoader {
             if (response != null) {
                 ArrayList<Beach> beaches;
 
-                beaches = parseResponse(response, beachId, beachName);
+                beaches = parseResponse(response, beachId);
                 if (beaches != null && beaches.size() > 0) {
                     return beaches;
                 }
@@ -50,8 +62,7 @@ public class BeachLoader {
         return null;
     }
 
-    private static ArrayList<Beach> parseResponse(String response,
-                                                  int beachId, String beachName) {
+    private static ArrayList<Beach> parseResponse(String response, int beachId) {
         try {
             JSONArray results = new JSONArray(response);
             ArrayList<Beach> beaches = new ArrayList<>();
@@ -69,6 +80,9 @@ public class BeachLoader {
                 String swellScore = scoreDetailObject.getString(JSONParsing.SCORE_SWELL);
                 String tideScore = scoreDetailObject.getString(JSONParsing.SCORE_TIDE);
                 String windScore = scoreDetailObject.getString(JSONParsing.SCORE_WIND);
+
+                String name = scoreDetailObject.getString(JSONParsing.NAME);
+
                 double score = getScore(swellScore, tideScore, windScore);
 
                 JSONArray warningsObject = beachObject.getJSONArray(JSONParsing.WARNINGS);
@@ -76,7 +90,7 @@ public class BeachLoader {
                 for (int i = 0; i < warningsObject.length(); i++) {
                     warnings.add(warningsObject.getString(i));
                 }
-                Beach beach = new Beach(beachId, beachName, date, day, waveSizeFt, score, warnings,
+                Beach beach = new Beach(beachId, name, date, day, waveSizeFt, score, warnings,
                         assignScore(tideScore), assignScore(swellScore), assignScore(windScore), hour);
                 beaches.add(beach);
             }

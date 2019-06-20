@@ -12,15 +12,19 @@ import android.widget.FrameLayout;
 
 import com.example.android.rightide.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ContentProvider.CursorHelper;
+import Models.Beach;
 import Models.County;
+import Utils.BeachLoader;
 
 public class FavoitesFragment extends Fragment {
     private ArrayList<Integer> favoritedBeachIds;
-    private static ArrayList<County> favoritedBeaches;
+    private static ArrayList<ArrayList<Beach>> favoritedBeaches;
     private FrameLayout frameLayout;
 
 
@@ -62,16 +66,21 @@ public class FavoitesFragment extends Fragment {
         }
     }
 
-    private static class BeachASyncTask extends AsyncTask<Integer, Void, County> {
+    private static class BeachASyncTask extends AsyncTask<Integer, Void, ArrayList<ArrayList<Beach>>> {
         @Override
-        protected County doInBackground(Integer... integers) {
+        protected ArrayList<ArrayList<Beach>> doInBackground(Integer... integers) {
+            if (integers != null && integers.length > 0) {
+                return BeachLoader.getFavoritedBeachInfo(integers);
+            }
+
             return null;
         }
 
         @Override
-        protected void onPostExecute(County county) {
-            super.onPostExecute(county);
-            favoritedBeaches.add(county);
+        protected void onPostExecute(ArrayList<ArrayList<Beach>> beaches) {
+            super.onPostExecute(beaches);
+
+            favoritedBeaches.addAll(beaches);
         }
     }
 }

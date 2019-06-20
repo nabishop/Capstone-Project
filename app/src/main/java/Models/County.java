@@ -15,13 +15,17 @@ public class County implements Comparable, Parcelable {
     private double averageWindScore;
     private double temperatureFahrenheit;
     private String wetSuit;
+    private double latitude;
+    private double longitude;
 
     public County(String countyName, ArrayList<Beach> beachesInCounty,
-                  double temperatureFahrenheit, String wetSuit) {
+                  double temperatureFahrenheit, String wetSuit, double latitude, double longitude) {
         this.countyName = countyName;
         this.beachesInCounty = beachesInCounty;
         this.temperatureFahrenheit = temperatureFahrenheit;
         this.wetSuit = wetSuit;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public static final Creator<County> CREATOR = new Creator<County>() {
@@ -84,6 +88,14 @@ public class County implements Comparable, Parcelable {
         return wetSuit;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
     @Override
     public int compareTo(@NonNull Object o) {
         County next = (County) o;
@@ -103,6 +115,8 @@ public class County implements Comparable, Parcelable {
         this.averageWindScore = in.readDouble();
         this.temperatureFahrenheit = in.readDouble();
         this.wetSuit = in.readString();
+        this.latitude = in.readDouble();
+        this.longitude = in.readDouble();
     }
 
     @Override
@@ -120,6 +134,8 @@ public class County implements Comparable, Parcelable {
         dest.writeDouble(averageWindScore);
         dest.writeDouble(temperatureFahrenheit);
         dest.writeString(wetSuit);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
     }
 
 

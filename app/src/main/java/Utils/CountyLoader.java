@@ -23,11 +23,17 @@ public class CountyLoader {
 
     private static class JSONParsing {
         public static final String SPOTS_URL = "http://api.spitcast.com/api/county/spots";
+
         public static final String[] COUNTIES = {"Del Norte", "Humboldt", "Mendocino",
                 "Sonoma", "Marin", "San Fransisco", "Santa Cruz", "San Mateo", "Monterey",
                 "San Luis Obispo", "Santa Barbara", "Ventura", "Los Angeles",
                 "Orange County", "San Diego"};
+
         public static final String COUNTY = "county";
+
+        public static final String LAT = "latitude";
+        public static final String LONG = "longitude";
+
         public static final String SPOT_ID = "spot_id";
         public static final String SPOT_NAME = "spot_name";
 
@@ -126,19 +132,22 @@ public class CountyLoader {
             int spot_id = countyObject.getInt(JSONParsing.SPOT_ID);
             String spotName = countyObject.getString(JSONParsing.SPOT_NAME);
 
-            ArrayList<Beach> beachArrayList;
-            beachArrayList = BeachLoader.getBeach(spotName, spot_id);
+            double lat = countyObject.getDouble(JSONParsing.LAT);
+            double longitude = countyObject.getDouble(JSONParsing.LONG);
 
-            if(results==null){
+            ArrayList<Beach> beachArrayList;
+            beachArrayList = BeachLoader.getBeach(spot_id);
+
+            if (results == null) {
                 results = getTempNWetSuit(countyName);
             }
 
             County county;
             if (results == null) {
-                county = new County(countyName, beachArrayList, 0, "No Data Available");
+                county = new County(countyName, beachArrayList, 0, "No Data Available", 0, 0);
             } else {
                 county = new County(countyName, beachArrayList,
-                        (double) results.get(0), (String) results.get(1));
+                        (double) results.get(0), (String) results.get(1), lat, longitude);
             }
             return county;
 
